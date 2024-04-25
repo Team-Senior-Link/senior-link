@@ -35,7 +35,11 @@ public class UserController {
         }
 
         userService.saveUser(request);
+        return "login";
+    }
 
+    @GetMapping("/login")
+    public String login() {
         return "login";
     }
 }
