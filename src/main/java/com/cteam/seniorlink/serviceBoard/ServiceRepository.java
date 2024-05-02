@@ -1,6 +1,5 @@
-package com.cteam.seniorlink.repository.service;
+package com.cteam.seniorlink.serviceBoard;
 
-import com.cteam.seniorlink.domain.service.ServiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +7,7 @@ import java.util.List;
 
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
-    List<ServiceEntity> findByCaregiverName(String Caregiver);
+    List<ServiceEntity> findByCaregiverNameContains(String caregiver);
+    List<ServiceEntity> findByLocationContains(String location);
+
 }

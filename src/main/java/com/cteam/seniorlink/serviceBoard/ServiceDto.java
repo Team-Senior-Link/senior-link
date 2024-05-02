@@ -1,8 +1,8 @@
-package com.cteam.seniorlink.dto.service;
+package com.cteam.seniorlink.serviceBoard;
 
-import com.cteam.seniorlink.domain.service.ServiceEntity;
 import com.cteam.seniorlink.domain.user.UserEntity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -34,6 +34,10 @@ public class ServiceDto {
 
     private UserEntity caregiver;
 
+    private String profileImgPath;
+
+    private MultipartFile f;
+
     public ServiceDto toDto(ServiceEntity s) {
         return ServiceDto.builder()
                 .serviceId(s.getServiceId())
@@ -47,6 +51,8 @@ public class ServiceDto {
                 .createdAt(s.getCreatedAt())
                 .updatedAt(s.getUpdatedAt())
                 .caregiver(s.getCaregiver())
+                .profileImgPath(s.getProfileImgPath())
+                .f(null)
                 .build();
     }
 }

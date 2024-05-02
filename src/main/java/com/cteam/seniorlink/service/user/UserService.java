@@ -2,8 +2,10 @@ package com.cteam.seniorlink.service.user;
 
 import com.cteam.seniorlink.domain.user.UserEntity;
 import com.cteam.seniorlink.dto.user.UserCreateRequest;
+import com.cteam.seniorlink.dto.user.UserDto;
 import com.cteam.seniorlink.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,4 +35,12 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    // 로그인한 user 이름 가져오기
+    public UserDto getMember(String username) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        return new UserDto().toDto(user);
+    }
+
 }

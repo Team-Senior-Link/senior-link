@@ -1,4 +1,4 @@
-package com.cteam.seniorlink.domain.service;
+package com.cteam.seniorlink.serviceBoard;
 
 
 import com.cteam.seniorlink.domain.user.UserEntity;
@@ -54,5 +54,25 @@ public class ServiceEntity {
     @JoinColumn(nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity caregiver;
+
+    @Column(length = 500)
+    private String profileImgPath;
+
+    public ServiceEntity toEntity(ServiceDto s) {
+        return ServiceEntity.builder()
+                .serviceId(s.getServiceId())
+                .title(s.getTitle())
+                .introduction(s.getIntroduction())
+                .career(s.getCareer())
+                .specialty(s.getSpecialty())
+                .location(s.getLocation())
+                .dayFree(s.getDayFree())
+                .timeFree(s.getTimeFree())
+                .createdAt(s.getCreatedAt())
+                .updatedAt(s.getUpdatedAt())
+                .caregiver(s.getCaregiver())
+                .profileImgPath(s.getProfileImgPath())
+                .build();
+    }
 
 }
