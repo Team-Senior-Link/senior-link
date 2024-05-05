@@ -6,11 +6,14 @@ import com.cteam.seniorlink.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -40,7 +43,14 @@ public class ServiceController {
     //글 작성 폼
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/add")
-    public void addForm() {
+    public String addForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // 현재 로그인한 사용자의 이름을 얻음
+        UserDto user = userService.getMember(username); // 사용자 정보 조회
+        model.addAttribute("user", user); // 모델에 사용자 정보 추가
+        ServiceDto service = new ServiceDto(); // 비어 있는 ServiceDto 객체 생성
+        model.addAttribute("service", service); // 모델에 서비스 DTO 추가
+        return "caregiverform";
     }
 
     // 글 작성
@@ -72,9 +82,10 @@ public class ServiceController {
                 e.printStackTrace();
             }
 
-            return "redirect:/service/list";
+//            return "redirect:/service/list";
+            return "index";
         } else {
-            return null;
+            return "signup";
         }
     }
 

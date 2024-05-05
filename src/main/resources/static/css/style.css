@@ -1,0 +1,74 @@
+/*nav, signup, login, logout, mypage*/
+.user-info{
+    text-align: right;
+}
+
+.user-info a{
+    text-decoration-line: none;
+    color: black;
+}
+
+.content-list{
+    text-align: right;
+    font-weight: bold;
+}
+
+/**********************************************************/
+
+.section-div{
+    margin-bottom: 2%;
+}
+
+/*요양보호사 글 등록*/
+.main-title{
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    /*border: 1px solid red;*/
+}
+
+.main-title h1{
+    font-size:50px;
+    font-weight:600;
+    color:#555555;
+}
+
+.main-title p{
+    font-size:17px;
+    color:#333333;
+    margin-top:24px;
+}
+
+.helper-form{
+    background-color: #FAFAFB;
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    /*border: 1px solid blue;*/
+}
+
+.input-content{
+    background-color:white;
+    border:1px solid #EBEBEB;
+    border-radius:12px;
+    padding:75px 80px 80px 80px;
+    margin-top:46px;
+    margin-bottom:46px;
+}
+
+.content-box{
+    display:flex;
+    align-items:center;
+    /*border: 1px solid red;*/
+}
+
+.form-label{
+    font-weight: bold;
+}
+.input-content-form{
+    position: relative;
+    width:1000px;
+    /*border: 1px solid red;*/
+}
+
+
