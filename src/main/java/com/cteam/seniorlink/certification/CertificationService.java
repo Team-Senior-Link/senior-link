@@ -18,7 +18,7 @@ public class CertificationService {
     }
 
     //pk로 검색
-    public CertificationDto getService(long certificationId) {
+    public CertificationDto getCertification(long certificationId) {
         CertificationEntity c = certificationRepository.findById(certificationId).orElse(null);
         if (c == null) {
             return null;
