@@ -34,7 +34,7 @@ public class ServiceDto {
 
     private UserEntity caregiver;
 
-    private String profileImgPath;
+    private String imgPath;
 
     private MultipartFile f;
 
@@ -51,7 +51,7 @@ public class ServiceDto {
                 .createdAt(s.getCreatedAt())
                 .updatedAt(s.getUpdatedAt())
                 .caregiver(s.getCaregiver())
-                .profileImgPath(s.getProfileImgPath())
+                .imgPath(s.getImgPath())
                 .f(null)
                 .build();
     }

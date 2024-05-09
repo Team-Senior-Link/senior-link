@@ -62,7 +62,7 @@ public class ServiceService {
     }
 
     //서비스 글 삭제
-    public void del(Long serviceId) {
+    public void del(long serviceId) {
         serviceRepository.deleteById(serviceId);
     }
 }

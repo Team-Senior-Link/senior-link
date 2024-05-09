@@ -27,8 +27,8 @@ import java.util.ArrayList;
 @RequestMapping("/service")
 public class ServiceController {
 
-    private final ServiceService serviceService;
     private final UserService userService;
+    private final ServiceService serviceService;
 
     @Value("${spring.servlet.multipart.location}")
     private String path;
@@ -60,18 +60,16 @@ public class ServiceController {
         UserDto uDto = userService.getMember(principal.getName());
 
         if (uDto.isStatus()) {
-            sdto.setCaregiver(UserEntity.builder()
-                    .username(uDto.getUsername())
-                    .status(uDto.isStatus())
-                    .build());
-
             MultipartFile f = sdto.getF();
-            String profileImgPath = f.getOriginalFilename();
-            File newFile = new File(path + profileImgPath);
+            String imgPath = f.getOriginalFilename();
+            File newFile = new File(path + imgPath);
 
             try {
                 f.transferTo(newFile);
-                sdto.setProfileImgPath(profileImgPath);
+                sdto.setImgPath(imgPath);
+
+                UserEntity userEntity = uDto.toEntity();
+                sdto.setCaregiver(userEntity);
 
                 LocalDateTime currentTime = LocalDateTime.now();
                 sdto.setCreatedAt(currentTime);
@@ -101,19 +99,19 @@ public class ServiceController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/edit")
     public String edit(ServiceDto sdto, Principal principal) {
-        ServiceDto origin = serviceService.getService(sdto.getServiceId());
         UserDto uDto = userService.getMember(principal.getName());
-        sdto.setCaregiver(UserEntity.builder()
-                .username(uDto.getUsername())
-                .build());
+        ServiceDto origin = serviceService.getService(sdto.getServiceId());
+
+        UserEntity userEntity = uDto.toEntity();
+        sdto.setCaregiver(userEntity);
 
         MultipartFile f = sdto.getF();
-        String profileImgPath = f.getOriginalFilename();
-        File newFile = new File(path + profileImgPath);
+        String imgPath = f.getOriginalFilename();
+        File newFile = new File(path + imgPath);
 
         try {
             f.transferTo(newFile);
-            sdto.setProfileImgPath(profileImgPath);
+            sdto.setImgPath(imgPath);
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
@@ -135,7 +133,7 @@ public class ServiceController {
     //삭제
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/del")
-    public String del(Long serviceId) {
+    public String del(long serviceId) {
         serviceService.del(serviceId);
 
         return "redirect:/service/list";

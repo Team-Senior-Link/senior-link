@@ -56,7 +56,7 @@ public class ServiceEntity {
     private UserEntity caregiver;
 
     @Column(length = 500)
-    private String profileImgPath;
+    private String imgPath;
 
     public ServiceEntity toEntity(ServiceDto s) {
         return ServiceEntity.builder()
@@ -71,7 +71,7 @@ public class ServiceEntity {
                 .createdAt(s.getCreatedAt())
                 .updatedAt(s.getUpdatedAt())
                 .caregiver(s.getCaregiver())
-                .profileImgPath(s.getProfileImgPath())
+                .imgPath(s.getImgPath())
                 .build();
     }
 

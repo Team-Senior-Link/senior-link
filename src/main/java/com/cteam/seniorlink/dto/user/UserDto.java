@@ -38,6 +38,21 @@ public class UserDto {
 
     private MultipartFile f;
 
+    public UserEntity toEntity() {
+        return UserEntity.builder()
+                .userId(this.userId)
+                .username(this.username)
+                .password(this.password)
+                .name(this.name)
+                .phone(this.phone)
+                .email(this.email)
+                .address(this.address)
+                .role(this.role)
+                .status(this.status)
+                .profileImgPath(this.profileImgPath)
+                .build();
+    }
+
     public UserDto toDto(UserEntity u){
         return UserDto.builder()
                 .userId(u.getUserId())
@@ -54,5 +69,9 @@ public class UserDto {
                 .updatedAt(u.getUpdatedAt())
                 .f(null)
                 .build();
+
+
+
     }
+
 }
