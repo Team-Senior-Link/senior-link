@@ -1,6 +1,6 @@
 package com.cteam.seniorlink.certification;
 
-import com.cteam.seniorlink.domain.user.UserEntity;
+import com.cteam.seniorlink.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

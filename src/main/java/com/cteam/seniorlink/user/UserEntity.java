@@ -1,4 +1,4 @@
-package com.cteam.seniorlink.domain.user;
+package com.cteam.seniorlink.user;
 
 import jakarta.persistence.*;
 import lombok.*;

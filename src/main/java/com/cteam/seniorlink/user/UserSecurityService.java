@@ -1,8 +1,8 @@
-package com.cteam.seniorlink.service.user;
+package com.cteam.seniorlink.user;
 
-import com.cteam.seniorlink.domain.user.UserEntity;
-import com.cteam.seniorlink.repository.user.UserRepository;
-import com.cteam.seniorlink.role.UserRole;
+import com.cteam.seniorlink.user.UserEntity;
+import com.cteam.seniorlink.user.UserRepository;
+import com.cteam.seniorlink.user.role.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

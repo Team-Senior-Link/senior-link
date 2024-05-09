@@ -1,9 +1,9 @@
 package com.cteam.seniorlink.certification;
 
 
-import com.cteam.seniorlink.domain.user.UserEntity;
-import com.cteam.seniorlink.dto.user.UserDto;
-import com.cteam.seniorlink.service.user.UserService;
+import com.cteam.seniorlink.user.UserEntity;
+import com.cteam.seniorlink.user.UserDto;
+import com.cteam.seniorlink.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;

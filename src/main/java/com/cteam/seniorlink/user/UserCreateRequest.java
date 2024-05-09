@@ -1,4 +1,4 @@
-package com.cteam.seniorlink.dto.user;
+package com.cteam.seniorlink.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

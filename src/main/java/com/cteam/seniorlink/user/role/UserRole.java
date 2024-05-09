@@ -1,4 +1,4 @@
-package com.cteam.seniorlink.role;
+package com.cteam.seniorlink.user.role;
 
 import lombok.Getter;
 

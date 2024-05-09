@@ -1,7 +1,5 @@
-package com.cteam.seniorlink.controller;
+package com.cteam.seniorlink.user;
 
-import com.cteam.seniorlink.dto.user.UserCreateRequest;
-import com.cteam.seniorlink.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,5 @@
-package com.cteam.seniorlink.dto.user;
+package com.cteam.seniorlink.user;
 
-import com.cteam.seniorlink.domain.user.UserEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,9 +1,9 @@
-package com.cteam.seniorlink.service.user;
+package com.cteam.seniorlink.user;
 
-import com.cteam.seniorlink.domain.user.UserEntity;
-import com.cteam.seniorlink.dto.user.UserCreateRequest;
-import com.cteam.seniorlink.dto.user.UserDto;
-import com.cteam.seniorlink.repository.user.UserRepository;
+import com.cteam.seniorlink.user.UserEntity;
+import com.cteam.seniorlink.user.UserCreateRequest;
+import com.cteam.seniorlink.user.UserDto;
+import com.cteam.seniorlink.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
