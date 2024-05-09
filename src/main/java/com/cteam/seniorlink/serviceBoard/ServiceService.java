@@ -34,7 +34,6 @@ public class ServiceService {
         for (ServiceEntity s : list) {
             list2.add(new ServiceDto().toDto(s));
         }
-
         return list2;
     }
 
