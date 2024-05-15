@@ -18,13 +18,24 @@ public class CertificationService {
     }
 
     //pk로 검색
-    public CertificationDto getService(long certificationId) {
+    public CertificationDto getCertification(long certificationId) {
         CertificationEntity c = certificationRepository.findById(certificationId).orElse(null);
         if (c == null) {
             return null;
         } else {
             return new CertificationDto().toDto(c);
         }
+    }
+
+    //작성자로 검색
+    public List<CertificationDto> getByCaregiver(String caregiver) {
+        List<CertificationEntity> list = certificationRepository.findByCaregiverNameContains(caregiver);
+        ArrayList<CertificationDto> list2 = new ArrayList<>();
+        for (CertificationEntity c : list) {
+            list2.add(new CertificationDto().toDto(c));
+        }
+
+        return list2;
     }
 
     //전체 검색
@@ -40,7 +51,7 @@ public class CertificationService {
 
 
     // 글 삭제
-    public void del(long certificationId){
+    public void del(long certificationId) {
         certificationRepository.deleteById(certificationId);
     }
 
