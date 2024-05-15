@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -29,6 +32,10 @@ public class CertificationEntity {
     @Column(length = 500)
     private String organization;
 
+    @Column(updatable = false)
+    @CreatedDate
+    private LocalDateTime createdAt;
+
     @Column(length = 500)
     private String imgPath;
 
@@ -38,6 +45,7 @@ public class CertificationEntity {
                 .caregiver(c.getCaregiver())
                 .name(c.getName())
                 .organization(c.getOrganization())
+                .createdAt(c.getCreatedAt())
                 .imgPath(c.getImgPath())
                 .build();
     }

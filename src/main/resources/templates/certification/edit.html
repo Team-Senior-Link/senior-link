@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            $("#del").click(function () {
+                location.href = "/certification/del?certificationId=[[${cdto.certificationId}]]";
+            });
+        });
+    </script>
+</head>
+<body>
+<div>
+    <h3>자격인증 상세페이지</h3>
+    <form method="post" action="/certification/edit" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <table border="1">
+            <tr>
+                <th>글번호</th>
+                <td><input type="text" name="certificationId" th:value="${cdto.certificationId}" readonly></td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td><input type="text" name="writer" th:value="${cdto.caregiver.name}" readonly></td>
+            </tr>
+            <tr>
+                <th>자격증 이름</th>
+                <td>
+                    <input type="text" name="name" th:value="${cdto.name }"
+                           th:readonly="${currentUser.username != cdto.caregiver.username}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>발급기관</th>
+                <td>
+                    <input type="text" name="organization" th:value="${cdto.organization }"
+                           th:readonly="${currentUser.username != cdto.caregiver.username}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>자격증 사본</th>
+                <td><img th:src="@{/certification/readImg(imgPath=${cdto.imgPath})}" style="width: 150px; height: 150px">
+                </td>
+            </tr>
+            <tr th:if="${currentUser.username == cdto.caregiver.username}">
+                <th>자료변경</th>
+                <td><input type="file" name="f"></td>
+            </tr>
+            <tr th:if="${currentUser.username == cdto.caregiver.username}">
+                <th>편집</th>
+                <td><input type="submit" value="수정"><input type="button" id="del" value="삭제"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

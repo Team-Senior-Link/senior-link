@@ -24,8 +24,6 @@ public class ServiceDto {
 
     private String location;
 
-    private int dayFree;
-
     private int timeFree;
 
     private LocalDateTime createdAt;
@@ -38,7 +36,7 @@ public class ServiceDto {
 
     private MultipartFile f;
 
-    public ServiceDto toDto(ServiceEntity s) {
+    public static ServiceDto toDto(ServiceEntity s) {
         return ServiceDto.builder()
                 .serviceId(s.getServiceId())
                 .title(s.getTitle())
@@ -46,7 +44,6 @@ public class ServiceDto {
                 .career(s.getCareer())
                 .specialty(s.getSpecialty())
                 .location(s.getLocation())
-                .dayFree(s.getDayFree())
                 .timeFree(s.getTimeFree())
                 .createdAt(s.getCreatedAt())
                 .updatedAt(s.getUpdatedAt())

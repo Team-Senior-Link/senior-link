@@ -4,6 +4,8 @@ import com.cteam.seniorlink.user.UserEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @Builder
@@ -18,6 +20,8 @@ public class CertificationDto {
 
     private String organization;
 
+    private LocalDateTime createdAt;
+
     private String imgPath;
 
     private MultipartFile f;
@@ -28,6 +32,7 @@ public class CertificationDto {
                 .caregiver(c.getCaregiver())
                 .name(c.getName())
                 .organization(c.getOrganization())
+                .createdAt(c.getCreatedAt())
                 .imgPath(c.getImgPath())
                 .f(null)
                 .build();
