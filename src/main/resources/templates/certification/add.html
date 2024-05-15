@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div>
+    <h2 class="mb-4">자격 인증</h2>
+    <form action="/certification/add" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+
+        <table border="1">
+            <tr>
+                <th>작성자</th>
+                <td><input type="text" th:value="${#authentication.principal.username}" readonly></td>
+            </tr>
+            <tr>
+                <th>자격증명</th>
+                <td><input type="text" name="name" required></td>
+            </tr>
+            <tr>
+                <th>발급기관</th>
+                <td><input type="text" name="organization" required></td>
+            </tr>
+            <tr>
+                <th>사진선택</th>
+                <td><input type="file" name="f" required></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="작성"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</html>
