@@ -24,39 +24,37 @@ public class ServiceEntity {
     private Long serviceId;
 
     @Column(length = 1000)
-    private String title;
+    private String title; //제목
 
     @Column(length = 5000)
-    private String introduction;
+    private String introduction; //소개글
 
     @Column(length = 500)
-    private String career;
+    private String career; //대표경력
 
     @Column(length = 500)
-    private String specialty;
+    private String specialty; //전문분야
 
     @Column(length = 500)
-    private String location;
+    private String location; //활동지역
 
-    private int dayFree;
-
-    private int timeFree;
+    private int timeFree; //시간당요금
 
     @Column(updatable = false)
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; //게시일
 
     @Column(insertable = false)
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt; //수정일
 
     @ManyToOne
     @JoinColumn(nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UserEntity caregiver;
+    private UserEntity caregiver; //작성자
 
     @Column(length = 500)
-    private String imgPath;
+    private String imgPath; //활동사진
 
     public ServiceEntity toEntity(ServiceDto s) {
         return ServiceEntity.builder()
@@ -66,7 +64,6 @@ public class ServiceEntity {
                 .career(s.getCareer())
                 .specialty(s.getSpecialty())
                 .location(s.getLocation())
-                .dayFree(s.getDayFree())
                 .timeFree(s.getTimeFree())
                 .createdAt(s.getCreatedAt())
                 .updatedAt(s.getUpdatedAt())

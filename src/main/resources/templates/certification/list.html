@@ -12,13 +12,13 @@
             <th>상태</th>
         </tr>
 
-        <tr th:each="i:${list}">
-            <td th:text="${i.certificationId}"></td>
-            <td><a th:href="@{/certification/edit(certificationId=${i.certificationId})}" th:text="${i.caregiver.name}"></a></td>
-            <td th:text="${#temporals.format(i.createdAt, 'yyyy-MM-dd')}"></td>
+        <tr th:each="l:${list}">
+            <td th:text="${l.certificationId}"></td>
+            <td><a th:href="@{/certification/edit(certificationId=${l.certificationId})}" th:text="${l.caregiver.name}"></a></td>
+            <td th:text="${#temporals.format(l.createdAt, 'yyyy-MM-dd')}"></td>
             <td>
-                <span th:if="${i.caregiver.status == true}">승인</span>
-                <span th:if="${i.caregiver.status == false}">대기 중</span>
+                <span th:if="${l.caregiver.status == true}">승인</span>
+                <span th:if="${l.caregiver.status == false}">대기 중</span>
             </td>
         </tr>
     </table>

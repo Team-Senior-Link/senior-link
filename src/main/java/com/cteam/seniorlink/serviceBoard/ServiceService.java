@@ -1,10 +1,15 @@
 package com.cteam.seniorlink.serviceBoard;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -38,28 +43,24 @@ public class ServiceService {
         return list2;
     }
 
+    //페이지네이션
+    public Page<ServiceEntity> getServiceList(int page){
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "serviceId"));
+        return  this.serviceRepository.findAll(pageable);
+    }
+
     // select box로 검색(요양보호사, 지역)
-    public ArrayList<ServiceDto> getByOption(String type, String option) {
-        ArrayList<ServiceDto> list2 = new ArrayList<>();
-        if (type.equals("caregiver")) {
-            List<ServiceEntity> list = serviceRepository.findByCaregiverNameContains(option);
-            for (ServiceEntity s : list) {
-                list2.add(new ServiceDto().toDto(s));
-            }
-            return list2;
-        } else if (type.equals("location")) {
-            List<ServiceEntity> list = serviceRepository.findByLocationContains(option);
-            for (ServiceEntity s : list) {
-                list2.add(new ServiceDto().toDto(s));
-            }
-            return list2;
+    public Page<ServiceDto> getByOption(String type, String option, int page) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "serviceId"));
+        Page<ServiceEntity> list;
+        if (Objects.equals("caregiver", type)) {
+            list = serviceRepository.findByCaregiverNameContains(option, pageable);
+        } else if (Objects.equals("location", type)) {
+            list = serviceRepository.findByLocationContains(option, pageable);
         } else {
-            List<ServiceEntity> list = serviceRepository.findAll();
-            for (ServiceEntity s : list) {
-                list2.add(new ServiceDto().toDto(s));
-            }
-            return list2;
+            list = serviceRepository.findAll(pageable);
         }
+        return list.map(ServiceDto::toDto);
     }
 
     //서비스 글 삭제
