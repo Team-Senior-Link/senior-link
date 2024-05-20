@@ -20,7 +20,7 @@
     <div style='clear:both'></div>
     <div id="time-buttons"></div>
     <div id="event-info" style="display: none;">
-        <textarea id="event-title" placeholder="회의 제목을 입력하세요" style="width: 80%; margin-top: 10px;"></textarea>
+        <textarea id="event-title" placeholder="요청사항을 입력하세요" style="width: 80%; margin-top: 10px;"></textarea>
         <button id="submit-event" style="margin-top: 10px;">신청하기</button>
     </div>
 </div>
@@ -142,17 +142,17 @@
                     contentType: 'application/json',
                     data: JSON.stringify([eventData]),
                     success: function (response) {
-                        alert('일정이 성공적으로 추가되었습니다.');
+                        alert('예약 신청청이 성공적으로 되었습니다.');
                         calendar.addEvent(eventData); // 캘린더에 이벤트 추가
                         calendar.unselect(); // 선택 해제
                     },
                     error: function (error) {
                         console.error('Error adding event:', error);
-                        alert('일정 추가에 실패했습니다.');
+                        alert('예약 신청에 실패했습니다.');
                     }
                 });
             } else {
-                alert('제목과 시간을 선택해주세요.');
+                alert('시간과 요청사항을 입력해주세요.');
             }
         });
     });
