@@ -50,9 +50,9 @@ public class UserEntity implements UserDetails {
     @Column(length = 1000)
     private String addressDetail;
 
-    // Enum 테스트용 필드
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+//    // Enum 테스트용 필드
+//    @Enumerated(EnumType.STRING)
+//    private UserRole userRole;
 
     @Column
     private String role;

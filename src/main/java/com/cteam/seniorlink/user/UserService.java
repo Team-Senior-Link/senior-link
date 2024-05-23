@@ -32,6 +32,7 @@ public class UserService {
                 .phone(request.getPhone())
                 .email(request.getEmail())
                 .address(request.getAddress())
+                .addressDetail(request.getAddressDetail())
                 .role(request.getRole())
                 .grade(request.getGrade())
                 .status(false)
