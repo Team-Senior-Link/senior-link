@@ -5,7 +5,15 @@
     <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script th:inline="javascript">
+        var isLoggedIn = [[${currentUser != null}]];
         $(document).ready(function () {
+            $("#reservationForm").submit(function (e) {
+                if (!isLoggedIn) {
+                    e.preventDefault();
+                    window.location.href = "/user/login";
+                }
+            });
+
             $("#del").click(function () {
                 location.href = "/service/del?serviceId=[[${sdto.serviceId}]]";
             });
@@ -84,6 +92,12 @@
                 <td><input type="submit" value="수정"><input type="button" id="del" value="삭제"></td>
             </tr>
         </table>
+    </form>
+
+    <!--예약 하기 버튼-->
+    <form method="request" action="/schedule/serviceIdSchedule" id="reservationForm" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
+        <button type="submit">예약하기</button>
     </form>
 </div>
 </body>
