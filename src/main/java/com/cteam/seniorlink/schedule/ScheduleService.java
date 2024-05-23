@@ -5,6 +5,9 @@ import com.cteam.seniorlink.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,9 +41,19 @@ public class ScheduleService {
         return list2;
     }
 
-    //login user로 검색
-    public List<ScheduleDto> getByUser(UserEntity carereceiver) {
+    //carereceiver로 검색
+    public List<ScheduleDto> getByCarereceiver(UserEntity carereceiver) {
         List<ScheduleEntity> list = scheduleRepository.findByCarereceiver(carereceiver);
+        List<ScheduleDto> list2 = list.stream()
+                .map(ScheduleDto::toDto)
+                .collect(Collectors.toList());
+
+        return list2;
+    }
+
+    //caregiver로 검색
+    public List<ScheduleDto> getByCaregiver(UserEntity caregiver) {
+        List<ScheduleEntity> list = scheduleRepository.findByCaregiver(caregiver);
         List<ScheduleDto> list2 = list.stream()
                 .map(ScheduleDto::toDto)
                 .collect(Collectors.toList());

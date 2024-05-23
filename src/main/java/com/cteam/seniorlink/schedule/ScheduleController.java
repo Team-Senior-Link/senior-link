@@ -3,16 +3,18 @@ package com.cteam.seniorlink.schedule;
 import com.cteam.seniorlink.serviceBoard.ServiceDto;
 import com.cteam.seniorlink.serviceBoard.ServiceService;
 import com.cteam.seniorlink.user.UserEntity;
-import com.cteam.seniorlink.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +27,7 @@ import java.util.Map;
 @RequestMapping("/schedule")
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    private final ScheduleRepository scheduleRepository;
     private final ServiceService serviceService;
 
     @RequestMapping("")
@@ -43,7 +46,7 @@ public class ScheduleController {
     // 돌봄 서비스 일정 목록
     @GetMapping("/list/{serviceId}")
     @ResponseBody
-    public List<Map<String, Object>> findByRoomId(@PathVariable("serviceId") int serviceId) {
+    public List<Map<String, Object>> findByServiceId(@PathVariable("serviceId") int serviceId) {
         List<ScheduleDto> list;
 
         list = scheduleService.getByServiceId(serviceId);
@@ -79,6 +82,27 @@ public class ScheduleController {
         ServiceDto sdto = serviceService.getService(serviceId);
         UserEntity caregiver = sdto.getCaregiver();
 
+        int grade = carereceiver.getGrade();
+        int maxReservationTime = 0;
+        if (grade == 1 || grade == 2) {
+            maxReservationTime = 4;
+        } else if (grade == 3 || grade == 4 || grade == 5) {
+            maxReservationTime = 3;
+        }
+
+        LocalDate startDateLocalDate = startDate.toLocalDate();
+        List<ScheduleEntity> eventsOnStartDate = scheduleRepository.findByCarereceiverAndStartDateBetween(
+                carereceiver, startDateLocalDate.atStartOfDay(), startDateLocalDate.atTime(LocalTime.MAX));
+
+        ModelMap map = new ModelMap();
+        boolean flag = true;
+
+        if (eventsOnStartDate.size() >= maxReservationTime) {
+            String msg = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
+            map.put("msg", msg);
+        }
+        map.put("flag",flag);
+
         ScheduleDto dto = ScheduleDto.builder()
                 .carereceiver(carereceiver)
                 .caregiver(caregiver)
@@ -88,10 +112,7 @@ public class ScheduleController {
                 .requestMsg(requestMsg)
                 .build();
 
-        ScheduleDto s = scheduleService.save(dto);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("scheduleId", s.getScheduleId() + "");
+        scheduleService.save(dto);
 
         return map;
     }

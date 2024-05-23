@@ -50,6 +50,9 @@ public class UserEntity implements UserDetails {
     private String role;
 
     @Column
+    private int grade;
+
+    @Column
     private boolean status;
 
     @Column(length = 500)

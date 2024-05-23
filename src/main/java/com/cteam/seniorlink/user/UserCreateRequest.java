@@ -38,6 +38,8 @@ public class UserCreateRequest {
     @NotEmpty(message = "회원 구분은 필수항목입니다.")
     private String role;
 
+    private int grade;
+
     private String profileImgPath;
 
 }

@@ -1,9 +1,5 @@
 package com.cteam.seniorlink.user;
 
-import com.cteam.seniorlink.user.UserEntity;
-import com.cteam.seniorlink.user.UserCreateRequest;
-import com.cteam.seniorlink.user.UserDto;
-import com.cteam.seniorlink.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +24,7 @@ public class UserService {
                 .email(request.getEmail())
                 .address(request.getAddress())
                 .role(request.getRole())
+                .grade(request.getGrade())
                 .status(false)
                 .profileImgPath(request.getProfileImgPath())
                 .createdAt(LocalDateTime.now())
