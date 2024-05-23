@@ -1,10 +1,12 @@
 package com.cteam.seniorlink.certification;
 
+import com.cteam.seniorlink.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,15 +30,15 @@ public class CertificationService {
     }
 
     //작성자로 검색
-    public List<CertificationDto> getByCaregiver(String caregiver) {
-        List<CertificationEntity> list = certificationRepository.findByCaregiverNameContains(caregiver);
-        ArrayList<CertificationDto> list2 = new ArrayList<>();
-        for (CertificationEntity c : list) {
-            list2.add(new CertificationDto().toDto(c));
-        }
+    public List<CertificationDto> getByCaregiver(UserEntity caregiver) {
+        List<CertificationEntity> list = certificationRepository.findByCaregiver(caregiver);
+        List<CertificationDto> list2 = list.stream()
+                .map(CertificationDto::toDto)
+                .collect(Collectors.toList());
 
         return list2;
     }
+
 
     //전체 검색
     public ArrayList<CertificationDto> getAll() {

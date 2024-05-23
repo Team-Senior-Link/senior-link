@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -42,8 +44,10 @@ public class CertificationController {
     //글 목록
     @GetMapping("/list")
     public void list(Model model, Principal principal) {
-        String currentUser = principal.getName();
-        List<CertificationDto> list = certificationService.getByCaregiver(currentUser);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+
+        List<CertificationDto> list = certificationService.getByCaregiver(userEntity);
         model.addAttribute("list", list);
     }
 
