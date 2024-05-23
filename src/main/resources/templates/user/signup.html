@@ -35,8 +35,25 @@
                 <input type="text" th:field="*{address}" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">회원구분(추후 드롭다운으로 설정)</label>
-                <input type="text" th:field="*{role}" class="form-control">
+                <label for="addressDetail" class="form-label">상세주소</label>
+                <input type="text" th:field="*{addressDetail}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">회원구분</label>
+                <select th:field="*{role}" class="form-control" id="role">
+                    <option value="ROLE_CAREGIVER">요양보호사</option>
+                    <option value="ROLE_CARERECEIVER">시니어</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="grade" class="form-label">시니어 등급</label>
+                <select th:field="*{grade}" class="form-control" id="grade">
+                    <option value=1>1등급</option>
+                    <option value=2>2등급</option>
+                    <option value=3>3등급</option>
+                    <option value=4>4등급</option>
+                    <option value=5>5등급</option>
+                </select>
             </div>
             <input type="hidden" id="personality" class="form-control">
             <button type="submit" class="btn btn-outline-primary">회원가입</button>

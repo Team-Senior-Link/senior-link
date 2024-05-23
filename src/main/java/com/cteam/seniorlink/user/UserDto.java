@@ -1,5 +1,6 @@
 package com.cteam.seniorlink.user;
 
+import com.cteam.seniorlink.user.role.UserRole;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 

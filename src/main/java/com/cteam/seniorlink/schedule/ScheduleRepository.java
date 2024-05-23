@@ -14,4 +14,6 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
     List<ScheduleEntity> findByCarereceiver(UserEntity carereceiver); // carereceiver로 찾기
     List<ScheduleEntity> findByCaregiver(UserEntity caregiver); // caregiver로 찾기
     List<ScheduleEntity> findByCarereceiverAndStartDateBetween(UserEntity carereceiver, LocalDateTime startDate, LocalDateTime endDate); // carereceiver의 서비스 신청 횟수
+    List<ScheduleEntity> findAllByCaregiverUserId(long userId);
+    List<ScheduleEntity> findAllByCarereceiverUserId(long userId);
 }

@@ -16,7 +16,7 @@
         <!-- 로그인한 사용자에게만 보이는 항목 -->
         <div sec:authorize="isAuthenticated()" class="nav-item">
             <a th:href="@{/user/logout}">로그아웃</a>
-            <a th:href="@{/user/mypage}">마이페이지</a>
+            <a th:href="@{/templates/user/mypage.html}">마이페이지</a>
         </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
