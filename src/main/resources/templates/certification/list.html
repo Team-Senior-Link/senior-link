@@ -65,7 +65,6 @@
                         <td>이름</td>
                         <td>신청일자</td>
                         <td>상태</td>
-                        <th>수정</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,10 +75,6 @@
                             <td>
                                 <span th:if="${l.caregiver.status == true}">승인</span>
                                 <span th:if="${l.caregiver.status == false}">대기 중</span>
-                            </td>
-                            <td>
-                                <button><span th:if="${l.caregiver.status == true}">수정불가</span></button>
-                                <button><span th:if="${l.caregiver.status == false}">수정</span></button>
                             </td>
                         </tr>
                     <tbody>

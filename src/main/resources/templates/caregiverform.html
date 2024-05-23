@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div>
+
+    <div th:if="${!isStatus}">
+        <p>자격 인증을 한 사용자만 사용할 수 있는 페이지입니다.</p>
+    </div>
+
+    <<form th:if="${isStatus}" action="/service/add" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <h2 class="mb-4">자격 인증</h2>
+    <table border="1">
+        <tr>
+            <th>작성자</th>
+            <td><input type="text" th:value="${#authentication.principal.username}" readonly></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td><input type="text" name="title" required></td>
+        </tr>
+        <tr>
+            <th>소개글</th>
+            <td><input type="text" name="introduction" required></td>
+        </tr>
+        <tr>
+            <th>대표경력</th>
+            <td><input type="text" name="career" required></td>
+        </tr>
+        <tr>
+            <th>전문분야</th>
+            <td><input type="text" name="specialty" required></td>
+        </tr>
+        <tr>
+            <th>활동지역</th>
+            <td><input type="text" name="location" required></td>
+        </tr>
+        <tr>
+            <th>시간당요금</th>
+            <td><input type="number" name="timeFree" required></td>
+        </tr>
+        <tr>
+            <th>활동사진</th>
+            <td><input type="file" name="f"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="작성"></td>
+        </tr>
+    </table>
+</form>
+</div>
+</html>
