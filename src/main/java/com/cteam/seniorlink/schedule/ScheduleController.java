@@ -95,24 +95,27 @@ public class ScheduleController {
                 carereceiver, startDateLocalDate.atStartOfDay(), startDateLocalDate.atTime(LocalTime.MAX));
 
         ModelMap map = new ModelMap();
-        boolean flag = true;
+        boolean isReservation = true;
 
         if (eventsOnStartDate.size() >= maxReservationTime) {
-            String msg = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
-            map.put("msg", msg);
+            String message = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
+            map.put("message", message);
+            isReservation = false;
         }
-        map.put("flag",flag);
+        map.put("isReservation", isReservation);
 
-        ScheduleDto dto = ScheduleDto.builder()
-                .carereceiver(carereceiver)
-                .caregiver(caregiver)
-                .serviceId(serviceId)
-                .startDate(startDate)
-                .endDate(endDate)
-                .requestMsg(requestMsg)
-                .build();
+        if (isReservation) {
+            ScheduleDto dto = ScheduleDto.builder()
+                    .carereceiver(carereceiver)
+                    .caregiver(caregiver)
+                    .serviceId(serviceId)
+                    .startDate(startDate)
+                    .endDate(endDate)
+                    .requestMsg(requestMsg)
+                    .build();
 
-        scheduleService.save(dto);
+            scheduleService.save(dto);
+        }
 
         return map;
     }
