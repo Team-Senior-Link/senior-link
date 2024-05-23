@@ -26,7 +26,7 @@ public class CertificationDto {
 
     private MultipartFile f;
 
-    public CertificationDto toDto(CertificationEntity c) {
+    public static CertificationDto toDto(CertificationEntity c) {
         return CertificationDto.builder()
                 .certificationId(c.getCertificationId())
                 .caregiver(c.getCaregiver())

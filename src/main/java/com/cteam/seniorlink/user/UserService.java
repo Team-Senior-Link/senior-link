@@ -3,11 +3,6 @@ package com.cteam.seniorlink.user;
 import com.cteam.seniorlink.schedule.ScheduleDto;
 import com.cteam.seniorlink.schedule.ScheduleEntity;
 import com.cteam.seniorlink.schedule.ScheduleRepository;
-import com.cteam.seniorlink.user.UserEntity;
-import com.cteam.seniorlink.user.UserCreateRequest;
-import com.cteam.seniorlink.user.UserDto;
-import com.cteam.seniorlink.user.UserRepository;
-import com.cteam.seniorlink.user.role.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,6 +33,7 @@ public class UserService {
                 .email(request.getEmail())
                 .address(request.getAddress())
                 .role(request.getRole())
+                .grade(request.getGrade())
                 .status(false)
                 .profileImgPath(request.getProfileImgPath())
                 .createdAt(LocalDateTime.now())
@@ -59,16 +55,6 @@ public class UserService {
         Long userId = user.orElseThrow().getUserId();
         List<ScheduleEntity> scheduleList = new ArrayList<>();
 
-//        // Enum(user_role)
-//        // 요양보호사
-//        if (user.orElseThrow().getUserRole() == UserRole.CAREGIVER) {
-//            scheduleList = scheduleRepository.findAllByCaregiverUserId(userId);
-//        }
-//        // 시니어
-//        else if (user.orElseThrow().getUserRole() == UserRole.CARERECEIVER) {
-//            scheduleList = scheduleRepository.findAllByCarereceiverUserId(userId);
-//        }
-
         // String(role)
         // 요양보호사
         if ("ROLE_CAREGIVER".equals(user.get().getRole())) {
@@ -78,6 +64,16 @@ public class UserService {
         else if ("ROLE_CARERECEIVER".equals(user.get().getRole())) {
             scheduleList = scheduleRepository.findAllByCarereceiverUserId(userId);
         }
+
+        //        // Enum(user_role)
+//        // 요양보호사
+//        if (user.orElseThrow().getUserRole() == UserRole.CAREGIVER) {
+//            scheduleList = scheduleRepository.findAllByCaregiverUserId(userId);
+//        }
+//        // 시니어
+//        else if (user.orElseThrow().getUserRole() == UserRole.CARERECEIVER) {
+//            scheduleList = scheduleRepository.findAllByCarereceiverUserId(userId);
+//        }
 
         return scheduleList.stream()
                 .map(ScheduleDto::toDto)

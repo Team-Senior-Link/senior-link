@@ -46,16 +46,13 @@
                     var calendarEl = document.getElementById('calendar');
                     calendar = new FullCalendar.Calendar(calendarEl, {
                         headerToolbar: {
-                            left: 'prev,next today',
+                            left: 'prev',
                             center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                            right: 'next'
                         },
                         initialView: 'dayGridMonth',
-                        editable: true,
                         selectable: true,
-                        droppable: true,
                         dayMaxEvents: true,
-                        eventOverlap: false,
 
                         select: function (arg) {
                             selectedStart = arg.start;
@@ -142,9 +139,14 @@
                     contentType: 'application/json',
                     data: JSON.stringify([eventData]),
                     success: function (response) {
-                        alert('예약 신청청이 성공적으로 되었습니다.');
-                        calendar.addEvent(eventData); // 캘린더에 이벤트 추가
-                        calendar.unselect(); // 선택 해제
+                        if(response.flag){
+                            alert('예약 신청이 성공적으로 되었습니다.');
+                            calendar.addEvent(eventData); // 캘린더에 이벤트 추가
+                            calendar.unselect(); // 선택 해제
+                        }else{
+                            alert(response.msg);
+                        }
+
                     },
                     error: function (error) {
                         console.error('Error adding event:', error);

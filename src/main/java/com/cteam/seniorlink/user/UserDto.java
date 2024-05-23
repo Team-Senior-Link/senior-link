@@ -28,6 +28,8 @@ public class UserDto {
 
     private String role;
 
+    private int grade;
+
     private boolean status;
 
     private String profileImgPath;
@@ -48,6 +50,7 @@ public class UserDto {
                 .email(this.email)
                 .address(this.address)
                 .role(this.role)
+                .grade(this.grade)
                 .status(this.status)
                 .profileImgPath(this.profileImgPath)
                 .build();
@@ -63,6 +66,7 @@ public class UserDto {
                 .email(u.getEmail())
                 .address(u.getAddress())
                 .role(u.getRole())
+                .grade(u.getGrade())
                 .status(u.isStatus())
                 .profileImgPath(u.getProfileImgPath())
                 .createdAt(u.getCreatedAt())
