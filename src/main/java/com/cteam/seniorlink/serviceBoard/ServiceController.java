@@ -86,8 +86,8 @@ public class ServiceController {
             }
         } else {
             sdto.setImgPath("");
+            serviceService.save(sdto);
         }
-        serviceService.save(sdto);
 
         return "redirect:/service/list";
     }
