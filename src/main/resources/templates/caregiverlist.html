@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div>
+    <h2 class="mb-4">신청 현황</h2>
+
+    <table border="1">
+        <tr>
+            <br>
+            <th>번호</th>
+            <th>이름</th>
+            <th>신청일자</th>
+            <th>상태</th>
+        </tr>
+        <tr th:each="l:${list}">
+            <td th:text="${l.certificationId}"></td>
+            <td><a th:href="@{/certification/edit(certificationId=${l.certificationId})}" th:text="${l.caregiver.name}"></a></td>
+            <td th:text="${#temporals.format(l.createdAt, 'yyyy-MM-dd')}"></td>
+            <td>
+                <span th:if="${l.caregiver.status == true}">승인</span>
+                <span th:if="${l.caregiver.status == false}">대기 중</span>
+            </td>
+        </tr>
+    </table>
+</div>
+</html>
