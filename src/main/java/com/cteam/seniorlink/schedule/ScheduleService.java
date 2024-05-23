@@ -4,6 +4,7 @@ import com.cteam.seniorlink.user.UserEntity;
 import com.cteam.seniorlink.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +63,14 @@ public class ScheduleService {
     // 삭제
     public void del(long scheduleId) {
         scheduleRepository.deleteById(scheduleId);
+    }
+
+    // 예약 상태 변경 (수락/거절/취소)
+    @Transactional
+    public void updateScheduleStatus(Long scheduleId, int status) {
+        ScheduleEntity schedule = scheduleRepository.findById(scheduleId).orElseThrow(() ->
+                new IllegalArgumentException("유효하지 않은 스케쥴 ID입니다."));
+        schedule.setStatus(status);
+        scheduleRepository.save(schedule);
     }
 }
