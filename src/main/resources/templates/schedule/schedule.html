@@ -139,12 +139,12 @@
                     contentType: 'application/json',
                     data: JSON.stringify([eventData]),
                     success: function (response) {
-                        if(response.flag){
+                        if(response.isReservation){
                             alert('예약 신청이 성공적으로 되었습니다.');
                             calendar.addEvent(eventData); // 캘린더에 이벤트 추가
                             calendar.unselect(); // 선택 해제
                         }else{
-                            alert(response.msg);
+                            alert(response.message);
                         }
 
                     },
