@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+</head>
+<body>
+<div class="container">
+    <h1>내 정보</h1>
+    <div class="profile">
+        <img th:src="@{${user.profileImgPath}}" alt="Profile Image" class="profile-img">
+    </div>
+    <div class="details">
+        <p><strong>이름:</strong> <span th:text="${user.name}">Name</span></p>
+        <p><strong>구분:</strong>
+            <span th:if="${user.role == 'ROLE_CAREGIVER'}">요양보호사</span>
+            <span th:if="${user.role == 'ROLE_CARERECEIVER'}">시니어</span>
+        </p>
+        <p><strong>주소:</strong> <span th:text="${user.address}">Address</span></p>
+        <p><strong>이메일:</strong> <span th:text="${user.email}">Email</span></p>
+        <p><strong>인증 상태:</strong> <span th:text="${user.status ? '인증완료' : '인증 대기중'}">Status</span></p>
+    </div>
+
+    <div class="schedule">
+        <h2>신청내역</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>예약 일정</th>
+                <th>요청 사항</th>
+                <th>
+                    <span th:if="${user.role == 'ROLE_CAREGIVER'}">고객</span>
+                    <span th:if="${user.role == 'ROLE_CARERECEIVER'}">요양보호사</span>
+                </th>
+                <th>상태</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 스케쥴이 비어있는 경우 -->
+            <tr th:if="${#lists.isEmpty(schedule)}">
+                <td colspan="4">신청내역이 없습니다</td>
+            </tr>
+            <!-- 스케쥴이 있는 경우 -->
+            <tr th:each="schedule : ${schedule}">
+                <td>
+                    <span th:text="${#temporals.format(schedule.startDate, 'yyyy-MM-dd HH:mm')}"></span>
+                    <span> ~ </span>
+                    <span th:text="${#temporals.format(schedule.endDate, 'yyyy-MM-dd HH:mm')}"></span>
+                </td>
+                <td th:text="${schedule.requestMsg}">요청 사항</td>
+                <td>
+                    <span th:if="${user.role == 'ROLE_CAREGIVER'}" th:text="${schedule.carereceiver.name}"></span>
+                    <span th:if="${user.role == 'ROLE_CARERECEIVER'}" th:text="${schedule.caregiver.name}"></span>
+                </td>
+
+                <!--  예약 상태 (0: 대기중, 1: 수락, 2: 요양보호사가 취소, 3: 시니어가 취소) -->
+                <td>
+                    <span th:if="${schedule.status == 0}" th:text="'대기중'">상태</span>
+                    <span th:if="${schedule.status == 1}" th:text="'수락됨'">상태</span>
+                    <span th:if="${schedule.status == 2}" th:text="'요양보호사가 취소함'">상태</span>
+                    <span th:if="${schedule.status == 3}" th:text="'시니어가 취소함'">상태</span>
+                </td>
+
+                <!-- 요양보호사 상태 변경 버튼(수락/거절) -->
+                <td th:if="${user.role == 'ROLE_CAREGIVER' && schedule.status == 0}">
+                    <form th:action="@{/schedule/accept/{id}(id=${schedule.scheduleId})}" method="post">
+                        <button type="submit">수락</button>
+                    </form>
+                    <form th:action="@{/schedule/reject/{id}(id=${schedule.scheduleId})}" method="post">
+                        <button type="submit">거절</button>
+                    </form>
+                </td>
+                <!-- 시니어 상태 변경 버튼(예약 취소) -->
+                <td th:if="${user.role == 'ROLE_CARERECEIVER' && schedule.status == 0}">
+                    <form th:action="@{/schedule/cancel/{id}(id=${schedule.scheduleId})}" method="post">
+                        <button type="submit">예약 취소</button>
+                    </form>
+                </td>
+                <!-- 시니어 후기 작성 버튼 -->
+                <td th:if="${user.role == 'ROLE_CARERECEIVER' && schedule.status == 1}">
+                    <form th:action="@{/review/create/{id}(id=${schedule.serviceId})}" method="post">
+                        <button type="submit">후기 작성</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

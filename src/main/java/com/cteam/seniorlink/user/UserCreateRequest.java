@@ -35,6 +35,9 @@ public class UserCreateRequest {
     @NotEmpty(message = "주소는 필수항목입니다.")
     private String address;
 
+    @NotEmpty(message = "상세주소는 필수항목입니다.")
+    private String addressDetail;
+
     @NotEmpty(message = "회원 구분은 필수항목입니다.")
     private String role;
 

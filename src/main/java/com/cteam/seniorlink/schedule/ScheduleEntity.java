@@ -47,7 +47,7 @@ public class ScheduleEntity {
     @Column(length = 3000)
     private String requestMsg; // 요청 메시지
 
-    private int status; // 예약 상태 (0: 대기중, 1: 수락)
+    private int status; // 예약 상태 (0: 대기중, 1: 수락, 2: 요양보호사가 취소, 3: 시니어가 취소)
 
     public ScheduleEntity toEntity(ScheduleDto s){
         return ScheduleEntity.builder()

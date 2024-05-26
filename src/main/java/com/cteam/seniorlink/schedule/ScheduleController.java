@@ -95,24 +95,27 @@ public class ScheduleController {
                 carereceiver, startDateLocalDate.atStartOfDay(), startDateLocalDate.atTime(LocalTime.MAX));
 
         ModelMap map = new ModelMap();
-        boolean flag = true;
+        boolean isReservation = true;
 
         if (eventsOnStartDate.size() >= maxReservationTime) {
-            String msg = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
-            map.put("msg", msg);
+            String message = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
+            map.put("message", message);
+            isReservation = false;
         }
-        map.put("flag",flag);
+        map.put("isReservation", isReservation);
 
-        ScheduleDto dto = ScheduleDto.builder()
-                .carereceiver(carereceiver)
-                .caregiver(caregiver)
-                .serviceId(serviceId)
-                .startDate(startDate)
-                .endDate(endDate)
-                .requestMsg(requestMsg)
-                .build();
+        if (isReservation) {
+            ScheduleDto dto = ScheduleDto.builder()
+                    .carereceiver(carereceiver)
+                    .caregiver(caregiver)
+                    .serviceId(serviceId)
+                    .startDate(startDate)
+                    .endDate(endDate)
+                    .requestMsg(requestMsg)
+                    .build();
 
-        scheduleService.save(dto);
+            scheduleService.save(dto);
+        }
 
         return map;
     }
@@ -122,5 +125,27 @@ public class ScheduleController {
     @ResponseBody
     public void del(@PathVariable("scheduleId") long scheduleId) {
         scheduleService.del(scheduleId);
+    }
+
+    // 예약 상태 변경 (0: 대기중, 1: 수락, 2: 요양보호사가 취소, 3: 시니어가 취소)
+    // 요양보호사 - 예약 수락
+    @PostMapping("/accept/{scheduleId}")
+    public String acceptSchedule(@PathVariable Long scheduleId) {
+        scheduleService.updateScheduleStatus(scheduleId, 1);
+        return "redirect:/user/mypage";
+    }
+
+    // 요양보호사 - 예약 거절
+    @PostMapping("/reject/{scheduleId}")
+    public String rejectSchedule(@PathVariable Long scheduleId) {
+        scheduleService.updateScheduleStatus(scheduleId, 2);
+        return "redirect:/user/mypage";
+    }
+
+    // 시니어 - 예약 취소
+    @PostMapping("/cancel/{scheduleId}")
+    public String cancelSchedule(@PathVariable Long scheduleId) {
+        scheduleService.updateScheduleStatus(scheduleId, 3);
+        return "redirect:/user/mypage";
     }
 }

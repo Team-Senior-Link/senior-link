@@ -1,5 +1,6 @@
 package com.cteam.seniorlink.user;
 
+import com.cteam.seniorlink.user.role.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -46,10 +47,17 @@ public class UserEntity implements UserDetails {
     @Column(length = 1000)
     private String address;
 
+    @Column(length = 1000)
+    private String addressDetail;
+
+//    // Enum 테스트용 필드
+//    @Enumerated(EnumType.STRING)
+//    private UserRole userRole;
+
     @Column
     private String role;
 
-    @Column(nullable = true)
+    @Column
     private Integer grade;
 
     @Column
