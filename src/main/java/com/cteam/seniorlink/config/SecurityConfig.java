@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/service/add").authenticated()
                         .requestMatchers("/certification/").authenticated()
                         .requestMatchers("/user/mypage").authenticated()
+                        .requestMatchers("/videoBaord/add").authenticated()
                         .requestMatchers("/schedule/").authenticated()
                         .requestMatchers(HttpMethod.POST, "/schedule/**").authenticated()
                         .anyRequest().permitAll())
