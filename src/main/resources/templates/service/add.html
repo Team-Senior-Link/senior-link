@@ -18,7 +18,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/service/search}">방문 요양 서비스 신청</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/service/list}">방문 요양 서비스 신청</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">요양보호사 지원</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
@@ -62,7 +62,7 @@
                     <h1 class="fw-bolder"></h1>
                     <p class="lead fw-normal text-muted mb-0">서비스를 소개해주세요!</p>
                 </div>
-                <<form th:if="${isStatus}" action="/service/add" method="post" enctype="multipart/form-data">
+                <form th:if="${isStatus}" action="/service/add" method="post" enctype="multipart/form-data">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
@@ -91,12 +91,13 @@
                                     <input class="form-control" name="timeFree" type="text" required/>
                                     <label>시간당 요금</label>
                                 </div>
+                                <p>소개글을 작성하세요</p>
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" name="f" type="file" required/>
-                                    <label>활동 사진</label>
+                                    <input class="form-control" name="introduction" type="text" required/>
                                 </div>
+                                <p>활동 사진을 넣어주세요</p>
                                 <div>
-                                    <input class="form-control" name="f" type="file" required/>
+                                    <input class="form-control" name="f" type="file"/>
                                 </div>
                                 <br/>
                                 <div class="d-grid">

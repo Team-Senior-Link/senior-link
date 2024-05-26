@@ -10846,3 +10846,33 @@ html {
   background-repeat: no-repeat;
   min-height: 15rem;
 }
+
+.card {
+  border: none;
+  transition: transform 0.3s;
+  cursor: pointer; /* 마우스 커서 스타일 변경 */
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.text-muted {
+  font-size: 0.875rem;
+}
+
+hr {
+  border-top: 2px solid #6c757d;
+  width: 80%; /* hr 태그의 길이 조절 */
+}
+
