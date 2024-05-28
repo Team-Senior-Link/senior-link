@@ -74,14 +74,16 @@
             <tr>
                 <th>시간당요금</th>
                 <td>
-                    <input type="number" name="timeFree" th:value="${sdto.timeFree}"
-                           th:readonly="${currentUser == null or currentUser.username != sdto.caregiver.username}"/>
+                    <input type="number" name="timeFree"
+                           th:if="${currentUser != null and currentUser.username == sdto.caregiver.username}"
+                           th:value="${sdto.timeFree}"/>
+                    <span th:if="${currentUser == null or currentUser.username != sdto.caregiver.username}"
+                          th:text="${@numberUtils.formatNumber((sdto.timeFree - (sdto.timeFree * 0.045)), '#,###')} + ' 원'"></span>
                 </td>
             </tr>
             <tr>
                 <th>활동사진</th>
-                <td><img th:src="@{/service/readImg(imgPath=${sdto.imgPath })}" style="width: 150px; height: 150px">
-                </td>
+                <td><img th:src="@{/service/readImg(imgPath=${sdto.imgPath})}" style="width: 150px; height: 150px"></td>
             </tr>
             <tr th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
                 <th>자료변경</th>
