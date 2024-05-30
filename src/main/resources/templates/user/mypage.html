@@ -13,8 +13,8 @@
     <div class="details">
         <p><strong>이름:</strong> <span th:text="${user.name}">Name</span></p>
         <p><strong>구분:</strong>
-            <span th:if="${user.role == 'ROLE_CAREGIVER'}">요양보호사</span>
-            <span th:if="${user.role == 'ROLE_CARERECEIVER'}">시니어</span>
+            <span th:if="${user.role.name() == 'CAREGIVER'}">요양보호사</span>
+            <span th:if="${user.role.name() == 'CARERECEIVER'}">시니어</span>
         </p>
         <p><strong>주소:</strong> <span th:text="${user.address}">Address</span></p>
         <p><strong>이메일:</strong> <span th:text="${user.email}">Email</span></p>
@@ -29,8 +29,8 @@
                 <th>예약 일정</th>
                 <th>요청 사항</th>
                 <th>
-                    <span th:if="${user.role == 'ROLE_CAREGIVER'}">고객</span>
-                    <span th:if="${user.role == 'ROLE_CARERECEIVER'}">요양보호사</span>
+                    <span th:if="${user.role.name() == 'CAREGIVER'}">고객</span>
+                    <span th:if="${user.role.name() == 'CARERECEIVER'}">요양보호사</span>
                 </th>
                 <th>상태</th>
                 <th></th>
@@ -50,8 +50,8 @@
                 </td>
                 <td th:text="${schedule.requestMsg}">요청 사항</td>
                 <td>
-                    <span th:if="${user.role == 'ROLE_CAREGIVER'}" th:text="${schedule.carereceiver.name}"></span>
-                    <span th:if="${user.role == 'ROLE_CARERECEIVER'}" th:text="${schedule.caregiver.name}"></span>
+                    <span th:if="${user.role.name() == 'CAREGIVER'}" th:text="${schedule.carereceiver.name}"></span>
+                    <span th:if="${user.role.name() == 'CARERECEIVER'}" th:text="${schedule.caregiver.name}"></span>
                 </td>
 
                 <!--  예약 상태 (0: 대기중, 1: 수락, 2: 요양보호사가 취소, 3: 시니어가 취소) -->
@@ -63,7 +63,7 @@
                 </td>
 
                 <!-- 요양보호사 상태 변경 버튼(수락/거절) -->
-                <td th:if="${user.role == 'ROLE_CAREGIVER' && schedule.status == 0}">
+                <td th:if="${user.role.name() == 'CAREGIVER' && schedule.status == 0}">
                     <form th:action="@{/schedule/accept/{id}(id=${schedule.scheduleId})}" method="post">
                         <button type="submit">수락</button>
                     </form>
@@ -72,13 +72,13 @@
                     </form>
                 </td>
                 <!-- 시니어 상태 변경 버튼(예약 취소) -->
-                <td th:if="${user.role == 'ROLE_CARERECEIVER' && schedule.status == 0}">
+                <td th:if="${user.role.name() == 'CARERECEIVER' && schedule.status == 0}">
                     <form th:action="@{/schedule/cancel/{id}(id=${schedule.scheduleId})}" method="post">
                         <button type="submit">예약 취소</button>
                     </form>
                 </td>
                 <!-- 시니어 후기 작성 버튼 -->
-                <td th:if="${user.role == 'ROLE_CARERECEIVER' && schedule.status == 1}">
+                <td th:if="${user.role.name() == 'CARERECEIVER' && schedule.status == 1}">
                     <form th:action="@{/review/create/{id}(id=${schedule.serviceId})}" method="post">
                         <button type="submit">후기 작성</button>
                     </form>
