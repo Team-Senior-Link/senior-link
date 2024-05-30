@@ -24,8 +24,26 @@
                 <input type="password" th:field="*{password2}" class="form-control" placeholder="비밀번호 확인">
                 <input type="text" th:field="*{phone}" class="form-control" placeholder="휴대폰 번호">
                 <input type="text" th:field="*{address}" class="form-control" placeholder="주소">
-                <input type="text" th:field="*{role}" class="form-control" placeholder="회원구분">
-            <button type="submit" class="button button--login alt">회원가입</button>
+                <input type="text" th:field="*{addressDetail}" class="form-control" placeholder="상세주소">
+                <div class="form-group">
+                    <select id="role" name="role" th:field="*{role}" class="form-control" onchange="onRoleChange()">
+                        <option value="">회원선택</option>
+                        <option value="caregiver">요양보호사</option>
+                        <option value="user">사용자</option>
+                    </select>
+                </div>
+                <div id="gradeDiv" class="form-group" style="display: none;">
+                    <label for="grade">등급</label>
+                    <select id="grade" name="grade" th:field="*{grade}" class="form-control">
+                        <option value="">등급 선택</option>
+                        <option value="1">1단계</option>
+                        <option value="2">2단계</option>
+                        <option value="3">3단계</option>
+                        <option value="4">4단계</option>
+                        <option value="5">5단계</option>
+                    </select>
+                </div>
+                <button type="submit" class="button button--login alt">회원가입</button>
         </form>
     </div>
 </div>

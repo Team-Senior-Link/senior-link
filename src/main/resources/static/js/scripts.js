@@ -1,7 +1,34 @@
-/*!
-* Start Bootstrap - Modern Business v5.0.7 (https://startbootstrap.com/template-overviews/modern-business)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-modern-business/blob/master/LICENSE)
-*/
-// This file is intentionally blank
-// Use this file to add JavaScript to your project
+function toggleEdit() {
+    var elementsToToggle = [
+        "title", "introduction", "career", "specialty", "location", "timeFree"
+    ];
+    var toggleButton = document.getElementById("toggleButton");
+
+    elementsToToggle.forEach(function (id) {
+        var displayElement = document.getElementById(id + "Display");
+        var editElement = document.getElementById(id + "Edit");
+        displayElement.classList.toggle("hidden");
+        editElement.classList.toggle("hidden");
+    });
+
+    if (toggleButton.innerText === "Edit") {
+        toggleButton.innerText = "Save";
+    } else {
+        saveData();
+        toggleButton.innerText = "Edit";
+    }
+}
+
+function saveData() {
+    var elementsToSave = [
+        "title", "introduction", "career", "specialty", "location", "timeFree"
+    ];
+
+    elementsToSave.forEach(function (id) {
+        var inputElement = document.getElementById(id + "Input").value;
+        var displayElement = document.getElementById(id + "Display");
+        displayElement.innerText = inputElement;
+    });
+
+}
+

@@ -2,3 +2,51 @@
     background-color: blue;
     color: white;
 }
+
+#wrap {
+    border: 1px solid red;
+}
+
+#calendar {
+    width: 50%;
+    margin: auto;
+    border: 1px solid green;
+}
+
+#event-info {
+    display: none;
+    margin-top: 20px;
+}
+
+#event-title {
+    width: 80%;
+    margin-top: 10px;
+}
+
+#submit-event {
+    margin-top: 10px;
+}
+
+.time-button {
+    margin: 5px;
+}
+
+.time-button.disabled {
+    background-color: #ccc;
+}
+
+.time-button.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* FullCalendar 링크 스타일 덮어쓰기 */
+.fc-daygrid-day-number, .fc-event-title,  .fc-col-header-cell-cushion {
+    color: black;
+    text-decoration: none;
+}
+
+.fc-col-header-cell-cushion a {
+    color: black;
+    text-decoration: none;
+}

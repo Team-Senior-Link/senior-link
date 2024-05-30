@@ -11,9 +11,21 @@
         slider.animate({
             'left': '30%'
         }, 350, 'easeOutBack');
+
+
+        function onRoleChange() {
+        var roleSelect = document.getElementById("role");
+        var gradeDiv = document.getElementById("gradeDiv");
+        if (roleSelect.value === "user") {
+        gradeDiv.style.display = "block";
+        } else {
+            gradeDiv.style.display = "none";
+        }
+        }
+
     });
 
-    login.on('click', function() {
+    login.on('click', function () {
         signupContent.css('display', 'none');
         loginContent.css('display', 'initial');
         slider.animate({

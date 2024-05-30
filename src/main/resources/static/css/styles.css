@@ -10876,3 +10876,7 @@ hr {
   width: 80%; /* hr 태그의 길이 조절 */
 }
 
+.hidden {
+  display: none;
+}
+

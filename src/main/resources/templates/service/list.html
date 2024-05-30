@@ -12,45 +12,7 @@
 </head>
 <body class="d-flex flex-column">
 <main class="flex-shrink-0">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container px-5">
-            <a class="navbar-brand" href="index.html">시니어링크</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/service/list}">방문 요양 서비스 신청</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">요양보호사 지원</a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                            <li><a class="dropdown-item" th:href="@{/service/add}">지원서 작성</a></li>
-                            <li><a class="dropdown-item" th:href="@{/certification/add}">자격 인증 신청</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">공지사항</a></li>
-                    <li class="nav-item">
-                        <div sec:authorize="isAnonymous()" class="nav-item">
-                            <a class="nav-link" th:href="@{/user/login}">로그인</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div sec:authorize="isAnonymous()" class="nav-item">
-                            <a class="nav-link" th:href="@{/user/signup}">회원가입</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div sec:authorize="isAuthenticated()" class="nav-item">
-                            <a class="nav-link" th:href="@{/user/logout}">로그아웃</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div sec:authorize="isAuthenticated()" class="nav-item">
-                            <a class="nav-link" th:href="@{/user/mypage}">마이페이지</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div th:replace="nav :: body"></div>
     <header class="py-5">
         <div class="container px-5">
             <div class="row justify-content-center">
@@ -76,25 +38,27 @@
     </form>
     <section class="py-5 bg-light" id="scroll-target">
         <div class="container px-5 my-5">
-            <div class th:each="l, loop:${paging}" onclick="location.href='/service/edit?serviceId=${l.serviceId}'" style="text-decoration: none; color: inherit; cursor: pointer;">
-                        <div class="card custom-card shadow-sm h-100">
-                            <div class="row gx-5 align-items-center">
-                                <div class="col-lg-6">
-                                    <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/500x300/343a40/6c757d" alt="..." />
-                                </div>
-                                <div class="col-lg-6">
-                                    <p th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index }"></p>
-                                    <h3 th:text="${l.caregiver.name}"></h3>
-                                    <hr>
-                                    <p th:text="${l.title}"></p>
-                                    <p th:text="${l.career}"></p>
-                                    <p th:text="${l.location}"></p>
-                                    <p th:text="${#temporals.format(l.createdAt, 'yyyy-MM-dd')}"></p>
-                                </div>
+            <div th:each="l, loop:${paging}">
+                <a th:href="@{/service/edit(serviceId=${l.serviceId})}" style="text-decoration: none; color: inherit;">
+                    <div class="card custom-card shadow-sm h-100" style="cursor: pointer;">
+                        <div class="row gx-5 align-items-center">
+                            <div class="col-lg-6">
+                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/500x300/343a40/6c757d" alt="..." />
+                            </div>
+                            <div class="col-lg-6">
+                                <p th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index }"></p>
+                                <h3 th:text="${l.caregiver.name}"></h3>
+                                <hr>
+                                <p th:text="${l.title}"></p>
+                                <p th:text="${l.career}"></p>
+                                <p th:text="${l.location}"></p>
+                                <p th:text="${#temporals.format(l.createdAt, 'yyyy-MM-dd')}"></p>
                             </div>
                         </div>
-                    <br/>
                     </div>
+                    <br/>
+                </a>
+            </div>
         </div>
     </section>
     <br>
