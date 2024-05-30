@@ -3,6 +3,7 @@ package com.cteam.seniorlink.user;
 import com.cteam.seniorlink.schedule.ScheduleDto;
 import com.cteam.seniorlink.schedule.ScheduleEntity;
 import com.cteam.seniorlink.schedule.ScheduleRepository;
+import com.cteam.seniorlink.user.role.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,25 +57,14 @@ public class UserService {
         Long userId = user.orElseThrow().getUserId();
         List<ScheduleEntity> scheduleList = new ArrayList<>();
 
-        // String(role)
         // 요양보호사
-        if ("ROLE_CAREGIVER".equals(user.get().getRole())) {
+        if (user.orElseThrow().getRole() == UserRole.CAREGIVER) {
             scheduleList = scheduleRepository.findAllByCaregiverUserId(userId);
         }
         // 시니어
-        else if ("ROLE_CARERECEIVER".equals(user.get().getRole())) {
+        else if (user.orElseThrow().getRole() == UserRole.CARERECEIVER) {
             scheduleList = scheduleRepository.findAllByCarereceiverUserId(userId);
         }
-
-        //        // Enum(user_role)
-//        // 요양보호사
-//        if (user.orElseThrow().getUserRole() == UserRole.CAREGIVER) {
-//            scheduleList = scheduleRepository.findAllByCaregiverUserId(userId);
-//        }
-//        // 시니어
-//        else if (user.orElseThrow().getUserRole() == UserRole.CARERECEIVER) {
-//            scheduleList = scheduleRepository.findAllByCarereceiverUserId(userId);
-//        }
 
         return scheduleList.stream()
                 .map(ScheduleDto::toDto)
