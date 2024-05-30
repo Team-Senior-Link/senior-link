@@ -1,12 +1,11 @@
 package com.cteam.seniorlink.user;
 
+import com.cteam.seniorlink.user.role.UserRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.yml")
@@ -26,7 +25,7 @@ public class UserServiceTests {
         userRequest.setEmail("admin@email.com");
         userRequest.setAddress("서울시");
         userRequest.setAddressDetail("서초구");
-        userRequest.setRole("ROLE_ADMIN");
+        userRequest.setRole(UserRole.ADMIN);
         userRequest.setGrade(0);
 
         userService.saveUser(userRequest);
@@ -45,7 +44,7 @@ public class UserServiceTests {
             userRequest.setEmail("careGiver" + i + "@email.com");
             userRequest.setAddress("서울시");
             userRequest.setAddressDetail("서초구");
-            userRequest.setRole("ROLE_CAREGIVER");
+            userRequest.setRole(UserRole.CAREGIVER);
             userRequest.setGrade(0);
 
             userService.saveUser(userRequest);
@@ -65,7 +64,7 @@ public class UserServiceTests {
             userRequest.setEmail("careReceiver" + i + "@email.com");
             userRequest.setAddress("서울시");
             userRequest.setAddressDetail("서초구");
-            userRequest.setRole("ROLE_CARERECEIVER");
+            userRequest.setRole(UserRole.CARERECEIVER);
             userRequest.setGrade(0);
 
             userService.saveUser(userRequest);

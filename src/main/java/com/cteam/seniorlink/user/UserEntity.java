@@ -50,14 +50,10 @@ public class UserEntity implements UserDetails {
     @Column(length = 1000)
     private String addressDetail;
 
-//    // Enum 테스트용 필드
-//    @Enumerated(EnumType.STRING)
-//    private UserRole userRole;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
-    @Column
-    private String role;
-
-    @Column
+    @Column(nullable = true)
     private Integer grade;
 
     @Column
@@ -78,7 +74,7 @@ public class UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(this.role));
+        authorities.add(new SimpleGrantedAuthority(this.role.getValue()));
         return authorities;
     }
 

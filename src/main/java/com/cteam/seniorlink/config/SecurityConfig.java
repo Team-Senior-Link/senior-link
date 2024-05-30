@@ -28,11 +28,11 @@ public class SecurityConfig {
                         .requestMatchers("/service/add").authenticated()
                         .requestMatchers("/certification/").authenticated()
                         .requestMatchers("/user/mypage").authenticated()
-                        .requestMatchers("/videoBaord/add").authenticated()
-                        .requestMatchers("/schedule/").authenticated()
                         .requestMatchers(HttpMethod.POST, "/schedule/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/schedule/del").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/videoBoard/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/videoBoard/del").hasAuthority("ROLE_ADMIN")
                         .anyRequest().permitAll())
-//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/user/login")
                         .defaultSuccessUrl("/"))
@@ -61,9 +61,4 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
-
-//    @Bean
-//    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
 }
