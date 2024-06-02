@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Room List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Chat Rooms</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Room ID</th>
+      <th scope="col">Sender</th>
+      <th scope="col">Receiver</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${list}">
+      <td th:text="${room.roomId}">Room ID</td>
+      <td th:text="${room.sender}">Sender</td>
+      <td th:text="${room.receiver}">Receiver</td>
+      <td>
+        <a th:href="@{/chat/room/{roomId}(roomId=${room.roomId})}" class="btn btn-primary">채팅방 입장하기</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
