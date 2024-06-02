@@ -11,10 +11,22 @@
 <body>
 <div class="container">
     <div class="col-6">
-        <h1>Chat Room</h1>
+        <h1>채팅방</h1>
     </div>
     <div>
-        <div id="msgArea" class="col"></div>
+        <div id="msgArea" class="col">
+            <!-- 이전 메시지 -->
+            <div class="col-6">
+                <div th:each="message : ${messages}">
+                    <div th:if="${message.sender} == ${username}" class="alert alert-primary">
+                        <b th:text="${message.sender} + ' (' + ${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm:ss')} + ') : ' + ${message.message}"></b>
+                    </div>
+                    <div th:if="${message.sender} != ${username}" class="alert alert-secondary">
+                        <b th:text="${message.sender} + ' (' + ${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm:ss')} + ') : ' + ${message.message}"></b>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-6">
             <div class="input-group mb-3">
                 <input type="text" id="msg" class="form-control">
@@ -28,30 +40,35 @@
 </div>
 <script th:inline="javascript">
     $(document).ready(function() {
-        var roomId = [[${roomId}]];
-        var username = /*[[${#authentication.principal.username}]]*/ '[[${#authentication.principal.username}]]';
+        var roomId = /*[[${roomId}]]*/ [[${roomId}]];
+        var username = /*[[${username}]]*/ '[[${username}]]';
 
         var sockJs = new SockJS("/stomp/chat");
         var stomp = Stomp.over(sockJs);
+
+        function renderMessage(sender, timestamp, message) {
+            var str = '';
+            if (sender === username) {
+                str = "<div class='col-6'>";
+                str += "<div class='alert alert-primary'>";
+                str += "<b>" + sender + " (" + timestamp + ") : " + message + "</b>";
+                str += "</div></div>";
+            } else {
+                str = "<div class='col-6'>";
+                str += "<div class='alert alert-secondary'>";
+                str += "<b>" + sender + " (" + timestamp + ") : " + message + "</b>";
+                str += "</div></div>";
+            }
+            return str;
+        }
 
         stomp.connect({}, function() {
             stomp.subscribe("/sub/chat/room/" + roomId, function(chat) {
                 var content = JSON.parse(chat.body);
                 var message = content.message;
                 var sender = content.sender;
-                var str = '';
-
-                if (sender === username) {
-                    str = "<div class='col-6'>";
-                    str += "<div class='alert alert-secondary'>";
-                    str += "<b>" + sender + " : " + message + "</b>";
-                    str += "</div></div>";
-                } else {
-                    str = "<div class='col-6'>";
-                    str += "<div class='alert alert-warning'>";
-                    str += "<b>" + sender + " : " + message + "</b>";
-                    str += "</div></div>";
-                }
+                var timestamp = new Date(content.timestamp).toLocaleString();
+                var str = renderMessage(sender, timestamp, message);
 
                 $("#msgArea").append(str);
             });

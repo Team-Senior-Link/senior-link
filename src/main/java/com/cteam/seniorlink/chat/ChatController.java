@@ -44,8 +44,12 @@ public class ChatController {
 
     // 채팅방 입장
     @GetMapping("/room/{roomId}")
-    public String getroom(@PathVariable Long roomId, Model model) {
+    public String getroom(@PathVariable Long roomId, Model model, Principal principal) {
+        List<ChatMessageDto> messages = chatService.findMessagesByRoomId(roomId);
+        String username = principal.getName();
         model.addAttribute("roomId", roomId);
+        model.addAttribute("messages", messages);
+        model.addAttribute("username", username);
         return "chat/room";
     }
 

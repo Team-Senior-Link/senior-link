@@ -34,14 +34,12 @@ public class ChatService {
     // 채팅방 목록 조회(마이페이지 -> 목록)
     @Transactional
     public List<ChatRoomDto> findRoomsByUser(String username) {
-        List<ChatRoomEntity> chatRooms = chatRoomRepository.findBySenderUsernameOrReceiverUsername(username, username);
-        return chatRooms.stream().map(room -> {
-            ChatRoomDto dto = new ChatRoomDto();
-            dto.setRoomId(room.getId());
-            dto.setSender(room.getSender().getUsername());
-            dto.setReceiver(room.getReceiver().getUsername());
-            return dto;
-        }).collect(Collectors.toList());
+        return chatRoomRepository.findBySenderUsernameOrReceiverUsername(username, username).stream()
+                .map(room -> new ChatRoomDto(
+                        room.getId(),
+                        room.getSender().getUsername(),
+                        room.getReceiver().getUsername()))
+                .collect(Collectors.toList());
     }
 
     // 채팅방 생성(서비스페이지 -> [문의하기])
@@ -53,34 +51,44 @@ public class ChatService {
                 .orElseThrow(() -> new EntityNotFoundException("Service not found"))
                 .getCaregiver();
 
-        Optional<ChatRoomEntity> existingRoom = chatRoomRepository.findBySenderAndReceiver(sender, receiver);
-
-        ChatRoomDto chatRoomDto;
-        if (existingRoom.isPresent()) {
-            chatRoomDto = ChatRoomDto.fromEntity(existingRoom.get());
-        } else {
-            chatRoomDto = new ChatRoomDto();
-            chatRoomDto.setSender(sender.getUsername());
-            chatRoomDto.setReceiver(receiver.getUsername());
-            ChatRoomEntity chatRoom = chatRoomDto.toEntity(sender, receiver);
-            chatRoom = chatRoomRepository.save(chatRoom);
-            chatRoomDto.setRoomId(chatRoom.getId());
-        }
-
-        return chatRoomDto;
+        return chatRoomRepository.findBySenderAndReceiver(sender, receiver)
+                .map(ChatRoomDto::fromEntity)
+                .orElseGet(() -> {
+                    ChatRoomDto chatRoomDto = new ChatRoomDto();
+                    chatRoomDto.setSender(sender.getUsername());
+                    chatRoomDto.setReceiver(receiver.getUsername());
+                    ChatRoomEntity chatRoom = chatRoomDto.toEntity(sender, receiver);
+                    chatRoom = chatRoomRepository.save(chatRoom);
+                    chatRoomDto.setRoomId(chatRoom.getId());
+                    return chatRoomDto;
+                });
     }
 
     // 메시지 저장
     @Transactional
     public void saveMessage(ChatMessageDto chatMessageDto) {
+        chatMessageDto.setTimestamp(
+                Optional.ofNullable(chatMessageDto.getTimestamp()).orElse(LocalDateTime.now())
+        );
+
         ChatRoomEntity chatRoom = chatRoomRepository.findById(chatMessageDto.getRoomId())
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 룸ID : " + chatMessageDto.getRoomId()));
 
-        if (chatMessageDto.getTimestamp() == null) {
-            chatMessageDto.setTimestamp(LocalDateTime.now());
-        }
         ChatMessageEntity chatMessageEntity = chatMessageDto.toEntity(chatRoom);
         chatMessageRepository.save(chatMessageEntity);
+    }
+
+    // 이전 채팅 메시지 조회
+    @Transactional(readOnly = true)
+    public List<ChatMessageDto> findMessagesByRoomId(Long roomId) {
+        return chatMessageRepository.findByChatRoomId(roomId)
+                .stream()
+                .map(message -> new ChatMessageDto(
+                        message.getChatRoom().getId(),
+                        message.getSender(),
+                        message.getMessage(),
+                        message.getTimestamp()))
+                .collect(Collectors.toList());
     }
 }
 
