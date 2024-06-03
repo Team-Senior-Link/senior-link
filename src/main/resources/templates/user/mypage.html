@@ -20,6 +20,10 @@
         <p><strong>이메일:</strong> <span th:text="${user.email}">Email</span></p>
         <p><strong>인증 상태:</strong> <span th:text="${user.status ? '인증완료' : '인증 대기중'}">Status</span></p>
     </div>
+    <!-- 채팅 목록 확인-->
+    <div>
+        <a class="btn btn-outline-danger me-3" th:href="@{/chat/list}">채팅 목록</a>
+    </div>
 
     <div class="schedule">
         <h2>신청내역</h2>

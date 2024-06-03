@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/schedule/del").authenticated()
                         .requestMatchers(HttpMethod.POST, "/videoBoard/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/videoBoard/del").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/chat/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/user/login")
@@ -42,6 +43,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true))
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/chat/**"))
                 );
         ;
         return http.build();
