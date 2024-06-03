@@ -40,13 +40,13 @@ public class VideoBoardService {
 
     //페이지네이션
     public Page<VideoBoardEntity> getVideoBoardList(int page){
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "videoBoardId"));
+        Pageable pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.DESC, "videoBoardId"));
         return  this.videoBoardRepository.findAll(pageable);
     }
 
     // select box로 검색(제목)
     public Page<VideoBoardDto> getByOption(String type, String option, int page) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "videoBoardId"));
+        Pageable pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.DESC, "videoBoardId"));
         Page<VideoBoardEntity> list;
         if (Objects.equals("title", type)) {
             list = videoBoardRepository.findByTitleContains(option, pageable);
