@@ -1,0 +1,72 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #000000;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.form-label {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.form-control {
+    margin-bottom: 15px;
+    padding: 10px;
+    color: #000000;
+}
+
+.btn-custom {
+    margin-top: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.form-control-plaintext {
+    background-color: transparent;
+    border: none;
+}
+
+.title h3 {
+    font-size: 1.2em;
+    text-align: center;
+    color: #000;
+}
+
+.description h3 {
+    color: #000;
+    font-size: 1em;
+    text-align: left;
+}

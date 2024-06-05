@@ -26,9 +26,11 @@ public class UserDto {
 
     private String address;
 
-    private String role;
+    private String addressDetail;
 
-    private int grade;
+    private UserRole role;
+
+    private Integer grade;
 
     private boolean status;
 
@@ -49,6 +51,7 @@ public class UserDto {
                 .phone(this.phone)
                 .email(this.email)
                 .address(this.address)
+                .addressDetail(this.addressDetail)
                 .role(this.role)
                 .grade(this.grade)
                 .status(this.status)
@@ -65,6 +68,7 @@ public class UserDto {
                 .phone(u.getPhone())
                 .email(u.getEmail())
                 .address(u.getAddress())
+                .addressDetail(u.getAddressDetail())
                 .role(u.getRole())
                 .grade(u.getGrade())
                 .status(u.isStatus())
@@ -73,9 +77,6 @@ public class UserDto {
                 .updatedAt(u.getUpdatedAt())
                 .f(null)
                 .build();
-
-
-
     }
 
 }

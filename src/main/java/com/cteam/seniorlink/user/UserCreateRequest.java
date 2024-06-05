@@ -1,7 +1,9 @@
 package com.cteam.seniorlink.user;
 
+import com.cteam.seniorlink.user.role.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -38,10 +40,10 @@ public class UserCreateRequest {
     @NotEmpty(message = "상세주소는 필수항목입니다.")
     private String addressDetail;
 
-    @NotEmpty(message = "회원 구분은 필수항목입니다.")
-    private String role;
+    @NotNull(message = "회원 구분은 필수항목입니다.")
+    private UserRole role;
 
-    private int grade;
+    private Integer grade;
 
     private String profileImgPath;
 

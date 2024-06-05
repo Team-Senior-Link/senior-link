@@ -9,9 +9,8 @@ public enum UserRole {
     CAREGIVER("ROLE_CAREGIVER"),
     CARERECEIVER("ROLE_CARERECEIVER");
 
+    private final String value;
     UserRole(String value) {
         this.value = value;
     }
-
-    private String value;
 }
