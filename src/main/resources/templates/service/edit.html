@@ -1,143 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>edit Template</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script th:inline="javascript">
-        var isLoggedIn = [[${currentUser != null}]];
-        var serviceId = 0;
-        var csrfHeaderName = 'X-CSRF-TOKEN';
-        var csrfToken = '';
-        $(document).ready(function () {
-            $("#reservationForm").submit(function (e) {
-                if (!isLoggedIn) {
-                    e.preventDefault();
-                    window.location.href = "/user/login";
-                }
-            });
-
-            $("#del").click(function () {
-                location.href = "/service/del?serviceId=[[${sdto.serviceId}]]";
-            });
-
-            $("#contactButton").click(function () {
-                location.href = "/chat/room/[[${sdto.serviceId}]]";
-            });
-
-            $("#contactButton").click(function () {
-                if (isLoggedIn) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/chat/room",
-                        data: JSON.stringify({ serviceId: serviceId }),
-                        contentType: "application/json",
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader(csrfHeaderName, csrfToken);
-                        },
-                        success: function (data) {
-                            window.location.href = "/chat/room/" + data.roomId;
-                        },
-                        error: function (xhr, status, error) {
-                            console.log("Error: " + error);
-                        }
-                    });
-                } else {
-                    window.location.href = "/user/login";
-                }
-            });
-
-        });
-    </script>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+    <script th:href="@{/js/scripts.js}"></script>
+    <script th:href="@{/js/service.js}"></script>
 </head>
-<body>
-<div>
-    <h3>신청 상세</h3>
-    <form method="post" action="/service/edit" enctype="multipart/form-data">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<body class="d-flex flex-column">
+<main class="flex-shrink-0">
+    <div th:replace="nav :: body"></div>
+    <section class="py-5">
+        <div class="container px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-3">
+                    <div class="d-flex align-items-center mt-lg-5 mb-4">
+                        <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                        <div class="ms-3">
+                            <div class="fw-bold">
+                                <p th:text="${sdto.caregiver.name}"></p>
+                            </div>
+                            <div class="text-muted">
+                                <p th:text="${sdto.caregiver.role}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex mx-auto">
+                        <form method="request" action="/schedule/serviceIdSchedule" id="reservationForm" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-outline-dark">예약하기</button>
+                            </div>
+                        </form>
+                        <form method="post" action="/chat/room" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
+                            <button type="submit" class="btn btn-outline-dark">문의하기</button>
+                        </form>
+                    </div>
+                </div>
 
-        <table border="1">
-            <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
-            <tr>
-                <th>수정일</th>
-                <td th:text="${#temporals.format(sdto.updatedAt, 'yyyy-MM-dd')}"></td>
-            </tr>
-            <tr>
-                <th>작성자</th>
-                <td th:text="${sdto.caregiver.name}"></td>
-            </tr>
-            <tr>
-                <th>제목</th>
-                <td>
-                    <input type="text" name="title" th:value="${sdto.title}"
-                           th:readonly="${currentUser == null or currentUser.username != sdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>소개글</th>
-                <td>
-                    <input type="text" name="introduction" th:value="${sdto.introduction}"
-                           th:readonly="${currentUser == null or currentUser.username != sdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>대표경력</th>
-                <td>
-                    <input type="text" name="career" th:value="${sdto.career}"
-                           th:readonly="${currentUser == null or currentUser.username != sdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>전문분야</th>
-                <td>
-                    <input type="text" name="specialty" th:value="${sdto.specialty}"
-                           th:readonly="${currentUser == null or currentUser.username != sdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>활동지역</th>
-                <td>
-                    <input type="text" name="location" th:value="${sdto.location}"
-                           th:readonly="${currentUser == null or currentUser.username != sdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>시간당요금</th>
-                <td>
-                    <input type="number" name="timeFree"
-                           th:if="${currentUser != null and currentUser.username == sdto.caregiver.username}"
-                           th:value="${sdto.timeFree}"/>
-                    <span th:if="${currentUser == null or currentUser.username != sdto.caregiver.username}"
-                          th:text="${@numberUtils.formatNumber((sdto.timeFree - (sdto.timeFree * 0.045)), '#,###')} + ' 원'"></span>
-                </td>
-            </tr>
-            <tr>
-                <th>활동사진</th>
-                <td><img th:src="@{/service/readImg(imgPath=${sdto.imgPath})}" style="width: 150px; height: 150px"></td>
-                <td><img th:src="@{/service/readImg(imgPath=${sdto.imgPath })}" style="width: 150px; height: 150px"></td>
-            </tr>
-            <tr th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
-                <th>자료변경</th>
-                <td><input type="file" name="f"></td>
-            </tr>
-            <tr th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
-                <th>편집</th>
-                <td><input type="submit" value="수정"><input type="button" id="del" value="삭제"></td>
-            </tr>
-        </table>
-    </form>
+                <div class="col-lg-9">
+                    <form method="post" action="/service/edit" enctype="multipart/form-data">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" name="serviceId" th:value="${sdto.serviceId}" />
+                        <article>
+                            <header class="mb-4">
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="text" name="title" class="form-control" th:value="${sdto.title}" />
+                                </div>
+                                <div th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                    <h1 id="titleDisplay" class="fw-bolder mb-1" th:text="${sdto.title}"></h1>
+                                </div>
+                                <div class="text-muted fst-italic mb-2" th:text="${#temporals.format(sdto.updatedAt, 'yyyy-MM-dd')}"></div>
+                            </header>
+                            <figure class="mb-4">
+                                <img class="img-fluid rounded" th:src="@{/service/readImg(imgPath=${sdto.imgPath })}" style="width: 900px; height: 400px" alt="..." />
+                            </figure>
+                            <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                <input type="file" name="f">
+                            </div>
+                            <section class="mb-5">
+                                <h3 class="fw-bolder mb-4 mt-5">대표경력</h3>
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="text" name="career" class="form-control" th:value="${sdto.career}" />
+                                </div>
+                                <div th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                    <p id="CareerDisplay" class="fw-bolder mb-1" th:text="${sdto.career}"></p>
+                                </div>
+                                <h3 class="fw-bolder mb-4 mt-5">전문분야</h3>
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="text" name="specialty" class="form-control" th:value="${sdto.specialty}" />
+                                </div>
+                                <div th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                    <p id="SpecialtyDisplay" class="fw-bolder mb-1" th:text="${sdto.specialty}"></p>
+                                </div>
+                                <h3 class="fw-bolder mb-4 mt-5">활동지역</h3>
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="text" name="location" class="form-control" th:value="${sdto.location}" />
+                                </div>
+                                <div th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                    <p id="LocationDisplay" class="fw-bolder mb-1" th:text="${sdto.location}"></p>
+                                </div>
+                                <h3 class="fw-bolder mb-4 mt-5">시간당 요금</h3>
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="number" name="timeFree" class="form-control" th:value="${sdto.timeFree}" />
+                                    <span th:if="${currentUser == null or currentUser.username != sdto.caregiver.username}"
+                                          th:value="${@numberUtils.formatNumber((sdto.timeFree - (sdto.timeFree * 0.045)), '#,###')} + ' 원'"></span>
 
-    <!-- 예약 하기 버튼 -->
-    <form method="request" action="/schedule/serviceIdSchedule" id="reservationForm" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
-        <button type="submit">예약하기</button>
-    </form>
-
-    <!-- 문의하기 버튼 -->
-    <form method="post" action="/chat/room" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
-        <button type="submit">문의하기</button>
-    </form>
+                                </div>
+                                <div th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                    <span th:if="${currentUser == null or currentUser.username != sdto.caregiver.username}"
+                                          th:text="${@numberUtils.formatNumber((sdto.timeFree - (sdto.timeFree * 0.045)), '#,###')} + ' 원'"></span>
+                                </div>
+                                <hr style="width: 100%;">
+                                <h3 class="fw-bolder mb-4 mt-5">소개글</h3>
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="text" name="introduction" class="form-control" th:value="${sdto.introduction}" />
+                                </div>
+                                <div class="textarea"
+                                        th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                    <p id="introductionDisplay" class="fw-bolder mb-1" th:text="${sdto.introduction}"></p>
+                                </div>
+                            </section>
+                            <hr style="width: 100%;">
+                            <section>
+                                <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
+                                    <input type="submit" value="수정">
+                                    <input type="button" id="del" value="삭제">
+                                </div>
+                            </section>
+                        </article>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<div th:replace="footer :: body"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
 </div>
 </body>
 </html>

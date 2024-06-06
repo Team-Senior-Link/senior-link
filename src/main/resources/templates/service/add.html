@@ -1,51 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div>
-
-    <div th:if="${!isStatus}">
-        <p>자격 인증을 한 사용자만 사용할 수 있는 페이지입니다.</p>
-    </div>
-
-    <<form th:if="${isStatus}" action="/service/add" method="post" enctype="multipart/form-data">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <h2 class="mb-4">자격 인증</h2>
-        <table border="1">
-            <tr>
-                <th>작성자</th>
-                <td><input type="text" th:value="${#authentication.principal.username}" readonly></td>
-            </tr>
-            <tr>
-                <th>제목</th>
-                <td><input type="text" name="title" required></td>
-            </tr>
-            <tr>
-                <th>소개글</th>
-                <td><input type="text" name="introduction" required></td>
-            </tr>
-            <tr>
-                <th>대표경력</th>
-                <td><input type="text" name="career" required></td>
-            </tr>
-            <tr>
-                <th>전문분야</th>
-                <td><input type="text" name="specialty" required></td>
-            </tr>
-            <tr>
-                <th>활동지역</th>
-                <td><input type="text" name="location" required></td>
-            </tr>
-            <tr>
-                <th>시간당요금</th>
-                <td><input type="number" name="timeFree" required></td>
-            </tr>
-            <tr>
-                <th>활동사진</th>
-                <td><input type="file" name="f"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="작성"></td>
-            </tr>
-        </table>
-    </form>
-</div>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>certificationAdd Page</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column">
+<main class="flex-shrink-0">
+    <div th:replace="nav :: body"></div>
+    <section class="py-5">
+        <div class="container px-5">
+            <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                <div th:if="${!isStatus}">
+                    <p>자격 인증을 한 사용자만 사용할 수 있는 페이지입니다.</p>
+                </div>
+                <div class="text-center mb-5">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                    <h1 class="fw-bolder"></h1>
+                    <p class="lead fw-normal text-muted mb-0">서비스를 소개해주세요!</p>
+                </div>
+                <form th:if="${isStatus}" action="/service/add" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" type="text" th:value="${#authentication.principal.username}" readonly/>
+                                    <label>작성자</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="title" type="text" required/>
+                                    <label>제목</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="career" type="text" required/>
+                                    <label>대표 경력</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="specialty" type="text" required/>
+                                    <label>전문 분야</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="location" type="text" required/>
+                                    <label>활동 지역</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="timeFree" type="number" required/>
+                                    <label>시간당 요금</label>
+                                </div>
+                                <p>소개글을 작성하세요</p>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" name="introduction" type="text" required/>
+                                </div>
+                                <p>활동 사진을 넣어주세요</p>
+                                <div>
+                                    <input class="form-control" name="f" type="file"/>
+                                </div>
+                                <br/>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit">작성</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<div th:replace="footer :: body"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</body>
 </html>

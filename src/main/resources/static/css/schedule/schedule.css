@@ -2,3 +2,83 @@
     background-color: blue;
     color: white;
 }
+#wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    /*border: 1px solid red;*/
+    padding: 10px;
+    margin:30px;
+}
+
+#calendar-wrap {
+    flex: 1;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-width: 50%; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
+}
+
+#calendar {
+    width: 100%;
+    border: 1px solid darkgrey;
+    padding: 20px;
+    text-align: left;
+}
+
+#schedule-info {
+    flex: 1;
+    /*border: 1px solid darkgrey;*/
+    padding: 10px;
+    margin-top: 30px;
+    margin-left: 20px;
+    min-width: 45%; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
+}
+
+#event-info {
+    display: none;
+    margin-top: 20px;
+}
+
+
+#submit-event {
+    margin-top: 10px;
+}
+
+.time-button {
+    flex: 1 0 21%; /* 너비를 설정하여 한 줄에 5개의 버튼을 배치합니다 (100% / 5 = 20%) */
+    min-width: 100px; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    cursor: pointer;
+}
+#time-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 버튼 사이의 간격을 설정합니다 */
+}
+
+.time-button.disabled {
+    background-color: #ccc;
+}
+
+.time-button.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* FullCalendar 링크 스타일 덮어쓰기 */
+.fc-daygrid-day-number, .fc-event-title,  .fc-col-header-cell-cushion {
+    color: black;
+    text-decoration: none;
+}
+
+.fc-col-header-cell-cushion a {
+    color: black;
+    text-decoration: none;
+}
