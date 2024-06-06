@@ -26,27 +26,35 @@ public class CertificationEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity caregiver;
 
-    @Column(length = 500)
-    private String name;
-
-    @Column(length = 500)
-    private String organization;
-
     @Column(updatable = false)
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @Column(length = 500)
-    private String imgPath;
+    @Column
+    private String workContract; // 근로 계약서
+
+    @Column
+    private String certificate; // 요양보호사 자격증
+
+    @Column
+    private String healthCheckup; // 건강검진 진단서
+
+    @Column
+    private String criminalHistory; // 범죄 경력 조회 회신서
+
+    @Column
+    private String privacyConsent; // 개인정보동의서
 
     public CertificationEntity toEntity(CertificationDto c){
         return CertificationEntity.builder()
                 .certificationId(c.getCertificationId())
                 .caregiver(c.getCaregiver())
-                .name(c.getName())
-                .organization(c.getOrganization())
                 .createdAt(c.getCreatedAt())
-                .imgPath(c.getImgPath())
+                .workContract(c.getWorkContract())
+                .certificate(c.getCertificate())
+                .healthCheckup(c.getHealthCheckup())
+                .criminalHistory(c.getCriminalHistory())
+                .privacyConsent(c.getPrivacyConsent())
                 .build();
     }
 }

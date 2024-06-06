@@ -15,14 +15,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -43,7 +41,7 @@ public class CertificationController {
 
     //글 목록
     @GetMapping("/list")
-    public void list(Model model, Principal principal) {
+    public void list(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
@@ -53,30 +51,53 @@ public class CertificationController {
 
     //글 작성 폼
     @GetMapping("/add")
-    public void addForm() {}
+    public void addForm() {
+    }
 
     //글 작성
+    // 글 작성
     @PostMapping("/add")
-    public String add(CertificationDto cdto, Principal principal) {
+    public String add(MultipartFile workContractFile,
+                      MultipartFile certificateFile,
+                      MultipartFile healthCheckupFile,
+                      MultipartFile criminalHistoryFile,
+                      MultipartFile privacyConsentFile,
+                      Principal principal) {
+
         UserDto uDto = userService.getMember(principal.getName());
         UserEntity userEntity = uDto.toEntity();
+
+        CertificationDto cdto = new CertificationDto();
         cdto.setCaregiver(userEntity);
+        cdto.setCreatedAt(LocalDateTime.now());
 
-        LocalDateTime createAt = LocalDateTime.now();
-        cdto.setCreatedAt(createAt);
-
-        MultipartFile f = cdto.getF();
-        String imgPath = f.getOriginalFilename();
-        File newFile = new File(path + imgPath);
         try {
-            f.transferTo(newFile);
-            cdto.setImgPath(imgPath);
-        } catch (IllegalStateException | IOException e) {
+            String workContractFileName = saveFile(workContractFile);
+            String certificateFileName = saveFile(certificateFile);
+            String healthCheckupFileName = saveFile(healthCheckupFile);
+            String criminalHistoryFileName = saveFile(criminalHistoryFile);
+            String privacyConsentFileName = saveFile(privacyConsentFile);
+
+            cdto.setWorkContract(workContractFileName);
+            cdto.setCertificate(certificateFileName);
+            cdto.setHealthCheckup(healthCheckupFileName);
+            cdto.setCriminalHistory(criminalHistoryFileName);
+            cdto.setPrivacyConsent(privacyConsentFileName);
+
+            certificationService.save(cdto);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        certificationService.save(cdto);
 
         return "redirect:/certification/list";
+    }
+
+    private String saveFile(MultipartFile file) throws IOException {
+        String originalFileName = file.getOriginalFilename();
+        String newFileName = System.currentTimeMillis() + "_" + originalFileName; // 이름 충돌 방지
+        File newFile = new File(path + newFileName);
+        file.transferTo(newFile);
+        return newFileName;
     }
 
     //수정 폼
@@ -92,51 +113,93 @@ public class CertificationController {
     }
 
     //수정 완료
-    @PostMapping("/edit")
-    public String edit(CertificationDto cdto, Principal principal, @RequestParam("f") MultipartFile f) {
+    @PostMapping(value = "/edit", consumes = "multipart/form-data")
+    public String edit(CertificationDto cdto, Principal principal,
+                       MultipartFile workContractFile,
+                       MultipartFile certificateFile,
+                       MultipartFile healthCheckupFile,
+                       MultipartFile criminalHistoryFile,
+                       MultipartFile privacyConsentFile) {
         UserDto uDto = userService.getMember(principal.getName());
         CertificationDto origin = certificationService.getCertification(cdto.getCertificationId());
 
         UserEntity userEntity = uDto.toEntity();
         cdto.setCaregiver(userEntity);
 
-        if (f != null && !f.isEmpty()) {
-            try {
-                String imgPath = f.getOriginalFilename();
-                File newFile = new File(path + imgPath);
-                f.transferTo(newFile);
-                cdto.setImgPath(imgPath);
-
-                if (origin.getImgPath() != null && !origin.getImgPath().isEmpty()) {
-                    File delFile = new File(path + origin.getImgPath());
-                    if (delFile.exists()) {
-                        delFile.delete();
-                    }
-                }
-            } catch (IllegalStateException | IOException e) {
-                e.printStackTrace();
+        try {
+            if (workContractFile != null && !workContractFile.isEmpty()) {
+                String workContractFileName = saveFile(workContractFile);
+                cdto.setWorkContract(workContractFileName);
+                deleteFileIfExists(origin.getWorkContract());
+            } else {
+                cdto.setWorkContract(origin.getWorkContract());
             }
-        } else {
-            cdto.setImgPath(origin.getImgPath());
-        }
 
-        certificationService.save(cdto);
+            if (certificateFile != null && !certificateFile.isEmpty()) {
+                String certificateFileName = saveFile(certificateFile);
+                cdto.setCertificate(certificateFileName);
+                deleteFileIfExists(origin.getCertificate());
+            } else {
+                cdto.setCertificate(origin.getCertificate());
+            }
+
+            if (healthCheckupFile != null && !healthCheckupFile.isEmpty()) {
+                String healthCheckupFileName = saveFile(healthCheckupFile);
+                cdto.setHealthCheckup(healthCheckupFileName);
+                deleteFileIfExists(origin.getHealthCheckup());
+            } else {
+                cdto.setHealthCheckup(origin.getHealthCheckup());
+            }
+
+            if (criminalHistoryFile != null && !criminalHistoryFile.isEmpty()) {
+                String criminalHistoryFileName = saveFile(criminalHistoryFile);
+                cdto.setCriminalHistory(criminalHistoryFileName);
+                deleteFileIfExists(origin.getCriminalHistory());
+            } else {
+                cdto.setCriminalHistory(origin.getCriminalHistory());
+            }
+
+            if (privacyConsentFile != null && !privacyConsentFile.isEmpty()) {
+                String privacyConsentFileName = saveFile(privacyConsentFile);
+                cdto.setPrivacyConsent(privacyConsentFileName);
+                deleteFileIfExists(origin.getPrivacyConsent());
+            } else {
+                cdto.setPrivacyConsent(origin.getPrivacyConsent());
+            }
+
+            certificationService.save(cdto);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return "redirect:/certification/list";
     }
 
-    //이미지 읽기
-    @GetMapping("/readImg")
-    public ResponseEntity<byte[]> readImg(String imgPath) {
-        if (imgPath == null || imgPath.isEmpty()) {
+
+    // 수정된후 기존 파일 삭제
+    private void deleteFileIfExists(String fileName) {
+        if (fileName != null && !fileName.isEmpty()) {
+            File delFile = new File(path + fileName);
+            if (delFile.exists()) {
+                delFile.delete();
+            }
+        }
+    }
+
+    //다운로드
+    @GetMapping("/down")
+    public ResponseEntity<byte[]> down(String fname) {
+        if (fname == null || fname.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        File f = new File(path + imgPath);
+        File f = new File(path + fname);
         HttpHeaders header = new HttpHeaders();
         ResponseEntity<byte[]> result = null;
         try {
             header.add("contentType", Files.probeContentType(f.toPath()));
+            header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + URLEncoder.encode(fname, "UTF-8") + "\"");
             result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(f), header, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,12 +209,9 @@ public class CertificationController {
         return result;
     }
 
-    //삭제
+    // 게시글 삭제
     @GetMapping("/del")
     public String del(long certificationId) {
-        CertificationDto origin = certificationService.getCertification(certificationId);
-        File delFile = new File(path + origin.getImgPath());
-        delFile.delete();
         certificationService.del(certificationId);
 
         return "redirect:/certification/list";

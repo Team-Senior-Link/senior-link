@@ -5,23 +5,30 @@
     <form action="/certification/add" method="post" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-
         <table border="1">
             <tr>
                 <th>작성자</th>
                 <td><input type="text" th:value="${#authentication.principal.username}" readonly></td>
             </tr>
             <tr>
-                <th>자격증명</th>
-                <td><input type="text" name="name" required></td>
+                <th>근로 계약서</th>
+                <td><input type="file" name="workContractFile" required></td>
             </tr>
             <tr>
-                <th>발급기관</th>
-                <td><input type="text" name="organization" required></td>
+                <th>요양보호사 자격증</th>
+                <td><input type="file" name="certificateFile" required></td>
             </tr>
             <tr>
-                <th>사진선택</th>
-                <td><input type="file" name="f" required></td>
+                <th>건강검진 진단서</th>
+                <td><input type="file" name="healthCheckupFile" required></td>
+            </tr>
+            <tr>
+                <th>범죄 경력 조회 회신서</th>
+                <td><input type="file" name="criminalHistoryFile" required></td>
+            </tr>
+            <tr>
+                <th>개인정보동의서</th>
+                <td><input type="file" name="privacyConsentFile" required></td>
             </tr>
             <tr>
                 <td><input type="submit" value="작성"></td>
