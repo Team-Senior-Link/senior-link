@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     initialView: 'dayGridMonth',
                     selectable: true,
                     dayMaxEvents: true,
+                    eventTimeFormat: { // 시간 표시 형식 설정
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        meridiem: false // 24시간 형식으로 설정
+                    },
 
                     select: function (arg) {
                         selectedStart = arg.start;

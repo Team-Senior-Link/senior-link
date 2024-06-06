@@ -35,11 +35,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    implementation 'org.json:json:20210307' // JSON 라이브러리
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-
