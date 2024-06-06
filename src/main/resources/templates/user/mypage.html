@@ -10,7 +10,7 @@
 <div class="container">
     <h1>내 정보</h1>
     <div class="profile">
-        <img th:src="@{/profile/{filename}(filename=${user.profileImgPath})}" alt="Profile Image" class="profile-img">
+        <img th:src="@{/profile/{filename}(filename=${user.profileImgPath != null && !#strings.isEmpty(user.profileImgPath) ? user.profileImgPath : 'default'})}" alt="Profile Image" class="profile-img">
     </div>
     <!-- 내 정보 수정-->
     <div>
