@@ -7,7 +7,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     padding: 10px;
     margin:30px;
 }
@@ -28,8 +28,9 @@
 
 #schedule-info {
     flex: 1;
-    border: 1px solid darkgrey;
-    margin-top: 80px;
+    /*border: 1px solid darkgrey;*/
+    padding: 10px;
+    margin-top: 30px;
     margin-left: 20px;
     min-width: 45%; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
 }
@@ -45,13 +46,21 @@
 }
 
 .time-button {
+    flex: 1 0 21%; /* 너비를 설정하여 한 줄에 5개의 버튼을 배치합니다 (100% / 5 = 20%) */
+    min-width: 100px; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
+    text-align: center;
     margin: 5px;
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
     border: 1px solid #007bff;
     background-color: white;
     color: #007bff;
     cursor: pointer;
+}
+#time-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 버튼 사이의 간격을 설정합니다 */
 }
 
 .time-button.disabled {

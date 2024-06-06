@@ -34,7 +34,7 @@
             <option value="location">지역</option>
         </select>
         <input type="text" name="option">
-        <button class="btn btn-outline-success" type="submit">검색</button>
+        <button class="btn btn-outline-dark" type="submit">검색</button>
     </form>
     <section class="py-5 bg-light" id="scroll-target">
         <div class="container px-5 my-5">
@@ -46,12 +46,11 @@
                                 <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/500x300/343a40/6c757d" alt="..." />
                             </div>
                             <div class="col-lg-6">
-                                <p th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index }"></p>
                                 <h3 th:text="${l.caregiver.name}"></h3>
                                 <hr>
                                 <p th:text="${l.title}"></p>
-                                <p th:text="${l.career}"></p>
-                                <p th:text="${l.location}"></p>
+                                <p th:text="'경력 : '+ ${l.career}"></p>
+                                <p th:text="'근무지 : ' + ${l.location}"></p>
                                 <p th:text="${#temporals.format(l.createdAt, 'yyyy-MM-dd')}"></p>
                             </div>
                         </div>

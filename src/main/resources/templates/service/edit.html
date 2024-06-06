@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html lang="en"  xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -31,7 +31,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-grid gap-2 d-md-flex mx-auto">
+                        <form method="request" action="/schedule/serviceIdSchedule" id="reservationForm" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-outline-dark">예약하기</button>
+                            </div>
+                        </form>
+                        <form method="post" action="/chat/room" enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
+                            <button type="submit" class="btn btn-outline-dark">문의하기</button>
+                        </form>
+                    </div>
                 </div>
+
                 <div class="col-lg-9">
                     <form method="post" action="/service/edit" enctype="multipart/form-data">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -52,7 +65,6 @@
                             <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
                                 <input type="file" name="f">
                             </div>
-                            <hr>
                             <section class="mb-5">
                                 <h3 class="fw-bolder mb-4 mt-5">대표경력</h3>
                                 <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
@@ -86,16 +98,17 @@
                                     <span th:if="${currentUser == null or currentUser.username != sdto.caregiver.username}"
                                           th:text="${@numberUtils.formatNumber((sdto.timeFree - (sdto.timeFree * 0.045)), '#,###')} + ' 원'"></span>
                                 </div>
-                                <hr>
+                                <hr style="width: 100%;">
                                 <h3 class="fw-bolder mb-4 mt-5">소개글</h3>
                                 <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
                                     <input type="text" name="introduction" class="form-control" th:value="${sdto.introduction}" />
                                 </div>
-                                <div th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
+                                <div class="textarea"
+                                        th:if="${currentUser == null || currentUser.username != sdto.caregiver.username}">
                                     <p id="introductionDisplay" class="fw-bolder mb-1" th:text="${sdto.introduction}"></p>
                                 </div>
                             </section>
-                            <hr/>
+                            <hr style="width: 100%;">
                             <section>
                                 <div th:if="${currentUser != null && currentUser.username == sdto.caregiver.username}">
                                     <input type="submit" value="수정">
@@ -103,14 +116,6 @@
                                 </div>
                             </section>
                         </article>
-                    </form>
-                    <form method="request" action="/schedule/serviceIdSchedule" id="reservationForm" enctype="application/x-www-form-urlencoded">
-                        <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
-                        <button type="submit">예약하기</button>
-                    </form>
-                    <form method="post" action="/chat/room" enctype="application/x-www-form-urlencoded">
-                        <input type="hidden" name="serviceId" th:value="${sdto.serviceId}">
-                        <button type="submit">문의하기</button>
                     </form>
                 </div>
             </div>

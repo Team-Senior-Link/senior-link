@@ -1277,6 +1277,7 @@ progress {
   .col-lg-3 {
     flex: 0 0 auto;
     width: 25%;
+    /*border: 1px solid darkgrey;*/
   }
   .col-lg-4 {
     flex: 0 0 auto;
@@ -1301,7 +1302,9 @@ progress {
   .col-lg-9 {
     flex: 0 0 auto;
     width: 75%;
+    padding: 10px;
   }
+
   .col-lg-10 {
     flex: 0 0 auto;
     width: 83.33333333%;
@@ -10879,4 +10882,9 @@ hr {
 .hidden {
   display: none;
 }
+
+.textarea {
+  white-space: pre-wrap;
+}
+
 
