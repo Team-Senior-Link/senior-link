@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>signup page</title>
     <link th:href="@{/css/login-signup.css}" rel="stylesheet" />
-    <script th:href="@{/js/login-signup.js}"></script>
+    <script src="/js/login-signup.js" defer></script>
 </head>
 <body>
 <div class="container container--static">
@@ -14,36 +14,36 @@
     </div>
 </div>
 <div class="container container--sliding--signup">
-    <div class="slider-content login">
+    <div class="slider-content signup">
         <h2 class="heading alt--signup">회원가입</h2>
         <form th:action="@{/user/signup}" th:object="${request}" method="post">
-                <input type="text" th:field="*{username}" class="form-control" placeholder="아이디">
-                <input type="text" th:field="*{name}" class="form-control" placeholder="이름">
-                <input type="email" th:field="*{email}" class="form-control" placeholder="이메일">
-                <input type="password" th:field="*{password1}" class="form-control" placeholder="비밀번호">
-                <input type="password" th:field="*{password2}" class="form-control" placeholder="비밀번호 확인">
-                <input type="text" th:field="*{phone}" class="form-control" placeholder="휴대폰 번호">
-                <input type="text" th:field="*{address}" class="form-control" placeholder="주소">
-                <input type="text" th:field="*{addressDetail}" class="form-control" placeholder="상세주소">
-                <div class="form-group">
-                    <select id="role" name="role" th:field="*{role}" class="form-control" onchange="onRoleChange()">
-                        <option value="">회원선택</option>
-                        <option value="caregiver">요양보호사</option>
-                        <option value="user">사용자</option>
-                    </select>
-                </div>
-                <div id="gradeDiv" class="form-group" style="display: none;">
-                    <label for="grade">등급</label>
-                    <select id="grade" name="grade" th:field="*{grade}" class="form-control">
-                        <option value="">등급 선택</option>
-                        <option value="1">1단계</option>
-                        <option value="2">2단계</option>
-                        <option value="3">3단계</option>
-                        <option value="4">4단계</option>
-                        <option value="5">5단계</option>
-                    </select>
-                </div>
-                <button type="submit" class="button button--login alt">회원가입</button>
+            <input type="text" th:field="*{username}" class="form-control" placeholder="아이디">
+            <input type="text" th:field="*{name}" class="form-control" placeholder="이름">
+            <input type="email" th:field="*{email}" class="form-control" placeholder="이메일">
+            <input type="password" th:field="*{password1}" class="form-control" placeholder="비밀번호">
+            <input type="password" th:field="*{password2}" class="form-control" placeholder="비밀번호 확인">
+            <input type="text" th:field="*{phone}" class="form-control" placeholder="휴대폰 번호">
+            <input type="text" th:field="*{address}" class="form-control" placeholder="주소">
+            <input type="text" th:field="*{addressDetail}" class="form-control" placeholder="상세주소">
+            <div class="form-group">
+                <select id="role" name="role" th:field="*{role}" class="form-control" onchange="toggleGradeSection()">
+                    <option value="">회원선택</option>
+                    <option value="CAREGIVER">요양보호사</option>
+                    <option value="CARERECEIVER">시니어</option>
+                </select>
+            </div>
+            <div id="grade-section" class="form-group" style="display: none;">
+                <label for="grade">시니어 등급</label>
+                <select id="grade" name="grade" th:field="*{grade}" class="form-control">
+                    <option value="">등급 선택</option>
+                    <option value="1">1단계</option>
+                    <option value="2">2단계</option>
+                    <option value="3">3단계</option>
+                    <option value="4">4단계</option>
+                    <option value="5">5단계</option>
+                </select>
+            </div>
+            <button type="submit" class="button button--login alt">회원가입</button>
         </form>
     </div>
 </div>

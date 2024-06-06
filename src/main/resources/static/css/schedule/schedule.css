@@ -2,15 +2,36 @@
     background-color: blue;
     color: white;
 }
-
 #wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
     border: 1px solid red;
+    padding: 10px;
+    margin:30px;
+}
+
+#calendar-wrap {
+    flex: 1;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-width: 50%; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
 }
 
 #calendar {
-    width: 50%;
-    margin: auto;
-    border: 1px solid green;
+    width: 100%;
+    border: 1px solid darkgrey;
+    padding: 20px;
+    text-align: left;
+}
+
+#schedule-info {
+    flex: 1;
+    border: 1px solid darkgrey;
+    margin-top: 80px;
+    margin-left: 20px;
+    min-width: 45%; /* 최소 너비를 설정하여 너무 작아지지 않도록 합니다 */
 }
 
 #event-info {
@@ -18,10 +39,6 @@
     margin-top: 20px;
 }
 
-#event-title {
-    width: 80%;
-    margin-top: 10px;
-}
 
 #submit-event {
     margin-top: 10px;
@@ -29,6 +46,12 @@
 
 .time-button {
     margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    cursor: pointer;
 }
 
 .time-button.disabled {

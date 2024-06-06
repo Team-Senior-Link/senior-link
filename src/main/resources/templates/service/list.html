@@ -64,22 +64,18 @@
     <br>
     <div th:if="${!paging.isEmpty()}">
         <ul class="pagination justify-content-center">
-
-            <!-- 처음 링크 -->
             <li class="page-item" th:classappend="${paging.first} ? 'disabled'">
                 <a class="page-link"
                    th:href="@{|?page=1&type=${type}&option=${option}|}">
                     <span>시작</span>
                 </a>
             </li>
-            <!-- 이전 링크 -->
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
                    th:href="@{|?page=${paging.number}&type=${type}&option=${option}|}">
                     <span>이전</span>
                 </a>
             </li>
-            <!-- 페이지 번호 -->
             <li th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
                 th:if="${page >= paging.number-4 and page <= paging.number+4}"
                 th:classappend="${page == paging.number+1} ? 'active'"
@@ -87,18 +83,15 @@
                 <a th:text="${page}" class="page-link"
                    th:href="@{|?page=${page}&type=${type}&option=${option}|}"></a>
             </li>
-            <!-- 생략 기호 -->
             <li th:if="${paging.number+4 < paging.totalPages}" class="page-item disabled">
                 <a class="page-link">...</a>
             </li>
-            <!-- 다음 기호 -->
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
                 <a class="page-link"
                    th:href="@{|?page=${paging.number+2}&type=${type}&option=${option}|}">
                     <span>다음</span>
                 </a>
             </li>
-            <!-- 마지막 링크 -->
             <li class="page-item" th:classappend="${paging.last} ? 'disabled'">
                 <a class="page-link"
                    th:href="@{|?page=${paging.totalPages}&type=${type}&option=${option}|}">
@@ -108,22 +101,7 @@
         </ul>
     </div>
 </main>
-
-
-<footer class="bg-dark py-4 mt-auto">
-    <div class="container px-5">
-        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-            <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; SeniorLink 2024</div></div>
-            <div class="col-auto">
-                <a class="link-light small" href="#!">Privacy</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Terms</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Contact</a>
-            </div>
-        </div>
-    </div>
-</footer>
+<div th:replace="footer :: body"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
 </body>
