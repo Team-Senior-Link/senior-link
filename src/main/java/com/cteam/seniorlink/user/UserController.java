@@ -8,11 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -75,8 +74,10 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/mypage/edit")
-    public String editMypageData(@ModelAttribute UserEditRequest request, Principal principal) {
-        userService.editUser(principal.getName(), request);
+    public String editMypageData(@ModelAttribute UserEditRequest request,
+                                 @RequestParam("profileImgPath") MultipartFile profileImgFile,
+                                 Principal principal) throws IOException {
+        userService.editUser(principal.getName(), request, profileImgFile);
         return "redirect:/user/mypage";
     }
 }

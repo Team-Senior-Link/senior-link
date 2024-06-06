@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/service/add").authenticated()
                         .requestMatchers("/certification/").authenticated()
-                        .requestMatchers("/user/mypage").authenticated()
+                        .requestMatchers("/user/mypage/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/schedule/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/schedule/del").authenticated()
                         .requestMatchers(HttpMethod.POST, "/videoBoard/**").hasAuthority("ROLE_ADMIN")

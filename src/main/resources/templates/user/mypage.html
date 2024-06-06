@@ -10,7 +10,7 @@
 <div class="container">
     <h1>내 정보</h1>
     <div class="profile">
-        <img th:src="@{${user.profileImgPath}}" alt="Profile Image" class="profile-img">
+        <img th:src="@{/profile/{filename}(filename=${user.profileImgPath})}" alt="Profile Image" class="profile-img">
     </div>
     <!-- 내 정보 수정-->
     <div>
@@ -112,7 +112,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/user/mypage/edit}" method="post">
+                <form th:action="@{/user/mypage/edit}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <div class="form-group">
                         <label for="name">이름</label>
                         <input type="text" class="form-control" id="name" name="name" th:value="${user.name}" required>

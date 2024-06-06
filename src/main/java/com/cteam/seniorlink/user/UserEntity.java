@@ -118,6 +118,9 @@ public class UserEntity implements UserDetails {
         this.email = request.getEmail();
         this.address = request.getAddress();
         this.addressDetail = request.getAddressDetail();
-        this.profileImgPath = request.getProfileImgPath();
+    }
+
+    public void updateProfileImage(String profileImgPath) {
+        this.profileImgPath = profileImgPath;
     }
 }

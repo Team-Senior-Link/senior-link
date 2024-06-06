@@ -19,6 +19,4 @@ public class UserEditRequest {
     private String address;
 
     private String addressDetail;
-
-    private String profileImgPath;
 }
