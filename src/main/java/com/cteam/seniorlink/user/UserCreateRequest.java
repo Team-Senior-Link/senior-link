@@ -45,6 +45,4 @@ public class UserCreateRequest {
 
     private Integer grade;
 
-    private String profileImgPath;
-
 }
