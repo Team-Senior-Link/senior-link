@@ -8,10 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,6 +48,7 @@ public class UserController {
         return "user/login";
     }
 
+    // 마이페이지
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/mypage")
     public String getMypageData(Model model, Principal principal) {
@@ -59,5 +60,24 @@ public class UserController {
             model.addAttribute("schedule", scheduleList);
         }
         return "user/mypage";
+    }
+
+    // 마이페이지 수정
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/edit")
+    public String editMypageForm(Model model, Principal principal) {
+        String username = principal.getName();
+        UserEditRequest request = userService.getUserEditRequest(username);
+        model.addAttribute("user", request);
+        return "user/mypage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/mypage/edit")
+    public String editMypageData(@ModelAttribute UserEditRequest request,
+                                 @RequestParam("profileImgPath") MultipartFile profileImgFile,
+                                 Principal principal) throws IOException {
+        userService.editUser(principal.getName(), request, profileImgFile);
+        return "redirect:/user/mypage";
     }
 }
