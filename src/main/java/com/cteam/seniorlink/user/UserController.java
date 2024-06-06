@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -48,6 +49,7 @@ public class UserController {
         return "user/login";
     }
 
+    // 마이페이지
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/mypage")
     public String getMypageData(Model model, Principal principal) {
@@ -59,5 +61,22 @@ public class UserController {
             model.addAttribute("schedule", scheduleList);
         }
         return "user/mypage";
+    }
+
+    // 마이페이지 수정
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/edit")
+    public String editMypageForm(Model model, Principal principal) {
+        String username = principal.getName();
+        UserEditRequest request = userService.getUserEditRequest(username);
+        model.addAttribute("user", request);
+        return "user/mypage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/mypage/edit")
+    public String editMypageData(@ModelAttribute UserEditRequest request, Principal principal) {
+        userService.editUser(principal.getName(), request);
+        return "redirect:/user/mypage";
     }
 }

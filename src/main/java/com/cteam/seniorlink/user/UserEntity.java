@@ -111,4 +111,13 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void updateUser(UserEditRequest request) {
+        this.name = request.getName();
+        this.phone = request.getPhone();
+        this.email = request.getEmail();
+        this.address = request.getAddress();
+        this.addressDetail = request.getAddressDetail();
+        this.profileImgPath = request.getProfileImgPath();
+    }
 }

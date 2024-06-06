@@ -24,6 +24,7 @@ public class UserService {
     private final ScheduleRepository scheduleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // 회원가입 정보 저장
     @Transactional
     public void saveUser(UserCreateRequest request) {
         UserEntity user = UserEntity.builder()
@@ -71,4 +72,28 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    // 마이페이지 수정
+    public UserEditRequest getUserEditRequest(String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> {
+                    UserEditRequest userEditRequest = new UserEditRequest();
+                    userEditRequest.setName(user.getName());
+                    userEditRequest.setPhone(user.getPhone());
+                    userEditRequest.setEmail(user.getEmail());
+                    userEditRequest.setAddress(user.getAddress());
+                    userEditRequest.setAddressDetail(user.getAddressDetail());
+                    userEditRequest.setProfileImgPath(user.getProfileImgPath());
+                    return userEditRequest;
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+    }
+
+    @Transactional
+    public void editUser(String username, UserEditRequest userEditRequest) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+
+        user.updateUser(userEditRequest);
+        userRepository.save(user);
+    }
 }
