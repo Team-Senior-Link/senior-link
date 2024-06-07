@@ -23,31 +23,44 @@
                 <td><input type="text" name="certificationId" th:value="${cdto.certificationId}" readonly></td>
             </tr>
             <tr>
-                <th>이름</th>
-                <td><input type="text" name="writer" th:value="${cdto.caregiver.name}" readonly></td>
-            </tr>
-            <tr>
-                <th>자격증 이름</th>
-                <td>
-                    <input type="text" name="name" th:value="${cdto.name }"
-                           th:readonly="${currentUser.username != cdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>발급기관</th>
-                <td>
-                    <input type="text" name="organization" th:value="${cdto.organization }"
-                           th:readonly="${currentUser.username != cdto.caregiver.username}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>자격증 사본</th>
-                <td><img th:src="@{/certification/readImg(imgPath=${cdto.imgPath})}" style="width: 150px; height: 150px">
-                </td>
+                <th>근로계약서</th>
+                <td><a th:href="@{/certification/down(fname=${cdto.workContract}, num=${cdto.certificationId})}" th:text="${cdto.workContract}"></a></td>
             </tr>
             <tr th:if="${currentUser.username == cdto.caregiver.username}">
                 <th>자료변경</th>
-                <td><input type="file" name="f"></td>
+                <td><input type="file" name="workContractFile"></td>
+            </tr>
+            <tr>
+                <th>요양보호사 자격증</th>
+                <td><a th:href="@{/certification/down(fname=${cdto.certificate}, num=${cdto.certificationId})}" th:text="${cdto.certificate}"></a></td>
+            </tr>
+            <tr th:if="${currentUser.username == cdto.caregiver.username}">
+                <th>자료변경</th>
+                <td><input type="file" name="certificateFile"></td>
+            </tr>
+            <tr>
+                <th>건강검진 진단서</th>
+                <td><a th:href="@{/certification/down(fname=${cdto.healthCheckup}, num=${cdto.certificationId})}" th:text="${cdto.healthCheckup}"></a></td>
+            </tr>
+            <tr th:if="${currentUser.username == cdto.caregiver.username}">
+                <th>자료변경</th>
+                <td><input type="file" name="healthCheckupFile"></td>
+            </tr>
+            <tr>
+                <th>범죄 경력 조회 회신서</th>
+                <td><a th:href="@{/certification/down(fname=${cdto.criminalHistory}, num=${cdto.certificationId})}" th:text="${cdto.criminalHistory}"></a></td>
+            </tr>
+            <tr th:if="${currentUser.username == cdto.caregiver.username}">
+                <th>자료변경</th>
+                <td><input type="file" name="criminalHistoryFile"></td>
+            </tr>
+            <tr>
+                <th>개인정보동의서</th>
+                <td><a th:href="@{/certification/down(fname=${cdto.privacyConsent}, num=${cdto.certificationId})}" th:text="${cdto.privacyConsent}"></a></td>
+            </tr>
+            <tr th:if="${currentUser.username == cdto.caregiver.username}">
+                <th>자료변경</th>
+                <td><input type="file" name="privacyConsentFile"></td>
             </tr>
             <tr th:if="${currentUser.username == cdto.caregiver.username}">
                 <th>편집</th>
