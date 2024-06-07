@@ -12,7 +12,7 @@
 </head>
 <body class="d-flex flex-column">
 <main class="flex-shrink-0">
-    <div th:replace="nav :: body"></div>
+    <div th:replace="~{nav :: body}"></div>
     <section class="py-5">
         <div class="container px-5">
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
@@ -26,60 +26,42 @@
                     <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
 <!--                        이 부분 프론트 재작성 필요 (내용 변경됨) -->
-<!--                        <div>-->
-<!--                            <div class="form-floating mb-3">-->
-<!--                                <input class="form-control" type="text" th:value="${#authentication.principal.username}" readonly/>-->
-<!--                                <label>작성자</label>-->
-<!--                            </div>-->
-<!--                            <div class="form-floating mb-3">-->
-<!--                                <input class="form-control" name="name" type="text" required/>-->
-<!--                                <label>자격증명</label>-->
-<!--                            </div>-->
-<!--                            <div class="form-floating mb-3">-->
-<!--                                <input class="form-control" name="organization" type="text" required/>-->
-<!--                                <label>발급기관</label>-->
-<!--                            </div>-->
-<!--                            <p>자격증 사본을 첨부하세요</p>-->
-<!--                            <div>-->
-<!--                                <input class="form-control" name="f" type="file" required/>-->
-<!--                            </div>-->
-<!--                            <br/>-->
-<!--                            <div class="d-grid">-->
-<!--                                <button class="btn btn-primary btn-lg" type="submit">제출</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    </div>-->
+                        <div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" type="text" th:value="${#authentication.principal.username}" readonly/>
+                                <label>작성자</label>
+                            </div>
 
-                    <table border="1">
-                        <tr>
-                            <th>작성자</th>
-                            <td><input type="text" th:value="${#authentication.principal.username}" readonly></td>
-                        </tr>
-                        <tr>
-                            <th>근로 계약서</th>
-                            <td><input type="file" name="workContractFile" required></td>
-                        </tr>
-                        <tr>
-                            <th>요양보호사 자격증</th>
-                            <td><input type="file" name="certificateFile" required></td>
-                        </tr>
-                        <tr>
-                            <th>건강검진 진단서</th>
-                            <td><input type="file" name="healthCheckupFile" required></td>
-                        </tr>
-                        <tr>
-                            <th>범죄 경력 조회 회신서</th>
-                            <td><input type="file" name="criminalHistoryFile" required></td>
-                        </tr>
-                        <tr>
-                            <th>개인정보동의서</th>
-                            <td><input type="file" name="privacyConsentFile" required></td>
-                        </tr>
-                        <tr>
-                            <td><input type="submit" value="작성"></td>
-                        </tr>
-                    </table>
+                                <p>근로계약서 첨부하세요</p>
+                                <div>
+                                    <input class="form-control" type="file" name="workContractFile" required/>
+                                </div>
+                                <br/>
+                                <p>요양보호사 자격증 첨부하세요</p>
+                                <div>
+                                    <input class="form-control" type="file" name="certificateFile" required/>
+                                </div>
+                                <br/>
+                                <p>건강검진 진단서 첨부하세요</p>
+                                <div>
+                                    <input class="form-control" type="file" name="healthCheckupFile"  required/>
+                                </div>
+                                <br/>
+                                <p>범죄 경력 조회 회신서 첨부하세요</p>
+                                <div>
+                                    <input class="form-control" type="file" name="criminalHistoryFile" required/>
+                                </div>
+                                <br/>
+                                <p>개인정보동의서 첨부하세요</p>
+                                <div>
+                                    <input class="form-control" type="file" name="privacyConsentFile"  required/>
+                                </div>
+                                <br/>
+
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-lg" type="submit">제출</button>
+                            </div>
+                        </div>
                     </div>
                     </div>
                 </form>
@@ -87,9 +69,9 @@
         </div>
     </section>
 </main>
-<div th:replace="footer :: body"></div>
+<div th:replace="~{footer :: body}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/scripts.js"></script>
 </body>
 </html>
->>>>>>> 7024cc15c225390586734adf8a93c62d5523a203
+
