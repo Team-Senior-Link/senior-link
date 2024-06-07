@@ -1,10 +1,13 @@
 package com.cteam.seniorlink.user;
 
+import com.cteam.seniorlink.chat.ChatService;
+import com.cteam.seniorlink.chat.room.ChatRoomDto;
 import com.cteam.seniorlink.schedule.ScheduleDto;
 import com.cteam.seniorlink.schedule.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final ChatService chatService;
 
     @GetMapping("/signup")
     public String signup(Model model) {
@@ -56,8 +60,10 @@ public class UserController {
             String username = principal.getName();
             UserDto userDto = userService.getMember(username);
             List<ScheduleDto> scheduleList = userService.getMypageScheduleByUsername(username);
+            List<ChatRoomDto> rooms = chatService.findRoomsByUser(username);
             model.addAttribute("user", userDto);
             model.addAttribute("schedule", scheduleList);
+            model.addAttribute("list", rooms);
         }
         return "user/mypage";
     }

@@ -7,36 +7,52 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/chat.js"></script>
+    <style>
+        #message-list {
+            height: 400px;
+            overflow-y: scroll;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="col-6">
-        <h1>채팅방</h1>
-    </div>
-    <div>
-        <div id="msgArea" class="col">
-            <!-- 이전 메시지 -->
-            <div class="col-6">
-                <div th:each="message : ${messages}">
-                    <div th:if="${message.sender} == ${username}" class="alert alert-primary">
-                        <b th:text="${message.sender} + ' (' + ${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm:ss')} + ') : ' + ${message.message}"></b>
-                    </div>
-                    <div th:if="${message.sender} != ${username}" class="alert alert-secondary">
-                        <b th:text="${message.sender} + ' (' + ${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm:ss')} + ') : ' + ${message.message}"></b>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header text-center"></div>
+                <div class="card-body" id="message-list">
+                    <ul class="list-unstyled">
+                        <!-- 이전 메시지 렌더링 -->
+                        <li th:each="message : ${messages}" class="mb-3">
+                            <div th:if="${message.sender} != ${username}" class="d-flex justify-content-start align-items-center">
+                                <div class="alert alert-secondary" role="alert">
+                                    <p th:text="${message.sender} + ' (' + ${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm:ss')} + ') : '"></p>
+                                    <p th:text="${message.message}"></p>
+                                </div>
+                            </div>
+                            <div th:if="${message.sender} == ${username}" class="d-flex justify-content-end align-items-center">
+                                <div class="alert alert-primary" role="alert">
+                                    <p th:text="${message.sender} + ' (' + ${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm:ss')} + ') : '"></p>
+                                    <p th:text="${message.message}"></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <input type="text" id="msg" class="form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="input-group mb-3">
-                <input type="text" id="msg" class="form-control">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                </div>
-            </div>
-        </div>
     </div>
-    <div class="col-6"></div>
 </div>
 <script th:inline="javascript">
     $(document).ready(function() {
@@ -49,17 +65,22 @@
         function renderMessage(sender, timestamp, message) {
             var str = '';
             if (sender === username) {
-                str = "<div class='col-6'>";
-                str += "<div class='alert alert-primary'>";
-                str += "<b>" + sender + " (" + timestamp + ") : " + message + "</b>";
-                str += "</div></div>";
+                str = "<li class='mb-3 d-flex justify-content-end align-items-center'>";
+                str += "<div class='alert alert-primary' role='alert'>";
+                str += "<p><strong>" + sender + "</strong> (" + timestamp + ") : " + message + "</p>";
+                str += "</div></li>";
             } else {
-                str = "<div class='col-6'>";
-                str += "<div class='alert alert-secondary'>";
-                str += "<b>" + sender + " (" + timestamp + ") : " + message + "</b>";
-                str += "</div></div>";
+                str = "<li class='mb-3 d-flex justify-content-start align-items-center'>";
+                str += "<div class='alert alert-secondary' role='alert'>";
+                str += "<p><strong>" + sender + "</strong> (" + timestamp + ") : " + message + "</p>";
+                str += "</div></li>";
             }
             return str;
+        }
+
+        function scrollToBottom() {
+            var messageList = $("#message-list");
+            messageList.scrollTop(messageList.prop("scrollHeight"));
         }
 
         stomp.connect({}, function() {
@@ -70,7 +91,8 @@
                 var timestamp = new Date(content.timestamp).toLocaleString();
                 var str = renderMessage(sender, timestamp, message);
 
-                $("#msgArea").append(str);
+                $("#message-list ul").append(str);
+                scrollToBottom();
             });
 
             stomp.send('/pub/chat/enter', {}, JSON.stringify({
@@ -98,6 +120,9 @@
                 sendMessage();
             }
         });
+
+        // 페이지 로드 시 스크롤을 최하단으로 이동
+        scrollToBottom();
     });
 </script>
 </body>
