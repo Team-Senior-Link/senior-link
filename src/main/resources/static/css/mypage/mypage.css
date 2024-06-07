@@ -1,0 +1,58 @@
+
+.profile-img {
+    width: 150px; /* 원하는 너비로 설정 */
+    height: 150px; /* 원하는 높이로 설정 */
+    object-fit: cover; /* 이미지를 요소 크기에 맞게 자르기 */
+    /*border: 1px solid red;*/
+}
+
+.header {
+    /*border: 1px solid red;*/
+}
+
+#info-text {
+    /*border: 1px solid red;*/
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.profile {
+    text-align: center; /* 이미지를 가운데 정렬하려면 사용 */
+}
+
+.profile-img {
+    width: 200px; /* 원하는 너비로 설정 */
+    height: 250px; /* 원하는 높이로 설정 */
+    object-fit: cover; /* 이미지를 요소 크기에 맞게 자르기 */
+}
+
+#info-text{
+    /*border: 1px solid red;*/
+    padding: 10px;
+}
+
+.schedule{
+    /*border: 1px solid red;*/
+    padding: 10px;
+    align-items: center;
+}
+
+.scroll-target{
+    /*border: 1px solid red;*/
+    padding: 10px;
+    align-items: center;
+}
+
+.fixed-width-button {
+    min-width: 100px; /* 원하는 최소 너비로 설정 */
+}
+
+.divider {
+    border-top: 1px solid #ddd; /* 줄 스타일 설정 */
+    margin-top: 20px; /* 위쪽 여백 설정 */
+    margin-bottom: 20px; /* 아래쪽 여백 설정 */
+}
+
+.table th, .table td {
+    min-width: 100px; /* 필요한 최소 너비로 설정 */
+}

@@ -17,7 +17,7 @@
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
-<div th:replace="nav :: body"></div>
+<div th:replace="~{nav :: body}"></div>
 <div id='wrap'>
     <div id='calendar-wrap'>
         <div id='calendar'></div>
@@ -45,6 +45,6 @@
     var headerName = [[${_csrf.headerName}]];
     var token = [[${_csrf.token}]];
 </script>
-<div th:replace="footer :: body"></div>
+<div th:replace="~{footer :: body}"></div>
 </body>
 </html>
