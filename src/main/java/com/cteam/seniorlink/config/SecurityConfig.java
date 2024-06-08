@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/service/add").hasAuthority("ROLE_CAREGIVER")
                         .requestMatchers("/certification/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CAREGIVER")
+                        .requestMatchers("/user/approve/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/user/disapprove/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/user/mypage/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/schedule/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/videoBoard/**").hasAuthority("ROLE_ADMIN")
@@ -42,6 +44,7 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
+//                .csrf().disable(); // CSRF 보호 비활성화
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .ignoringRequestMatchers(new AntPathRequestMatcher("/chat/**"))

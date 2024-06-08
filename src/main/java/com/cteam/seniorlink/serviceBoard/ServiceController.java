@@ -60,7 +60,7 @@ public class ServiceController {
     @GetMapping("/add")
     public void addForm(Model model, Principal principal) {
         UserDto uDto = userService.getMember(principal.getName());
-        model.addAttribute("isStatus", uDto.isStatus());
+        model.addAttribute("status", uDto.getStatus());
     }
 
     // 글 작성

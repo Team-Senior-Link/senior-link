@@ -49,7 +49,7 @@ public class UserService {
                 .addressDetail(request.getAddressDetail())
                 .role(request.getRole())
                 .grade(request.getGrade())
-                .status(false)
+                .status(0)
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -131,5 +131,15 @@ public class UserService {
         Files.write(path, profileImgFile.getBytes());
 
         return newFilename;
+    }
+
+    // 요양보호사 자격 인증 상태 변경 (인증/불인증)
+    @Transactional
+    public void updateCertificateStatus(Long userId, int status) {
+        System.out.println("@@@@@@@@@@@@@@@@@@Updating status for userId: " + userId + " to status: " + status);
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 사용자 입니다."));
+        userEntity.setStatus(status);
+        userRepository.save(userEntity);
     }
 }
