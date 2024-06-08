@@ -86,4 +86,21 @@ public class UserController {
         userService.editUser(principal.getName(), request, profileImgFile);
         return "redirect:/user/mypage";
     }
+
+    // 자격 인증 상태 (0: 대기중, 1: 인증, 2: 불인증)
+    // 자격 인증
+    @GetMapping("/approve")
+    public String approveStatus(long userId) {
+        userService.updateCertificateStatus(userId, 1);
+        return "redirect:/certification/list";
+    }
+
+    //자격 불인증
+    @GetMapping("/disapprove")
+    public String disapproveStatus(long userId) {
+        userService.updateCertificateStatus(userId, 2);
+        return "redirect:/certification/list";
+    }
+
+
 }

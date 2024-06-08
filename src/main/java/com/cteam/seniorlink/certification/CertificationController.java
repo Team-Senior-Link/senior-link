@@ -4,6 +4,7 @@ package com.cteam.seniorlink.certification;
 import com.cteam.seniorlink.user.UserDto;
 import com.cteam.seniorlink.user.UserEntity;
 import com.cteam.seniorlink.user.UserService;
+import com.cteam.seniorlink.user.role.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -45,8 +46,13 @@ public class CertificationController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
-        List<CertificationDto> list = certificationService.getByCaregiver(userEntity);
-        model.addAttribute("list", list);
+        if (userEntity.getRole() == UserRole.ADMIN) {
+            List<CertificationDto> list = certificationService.getAll();
+            model.addAttribute("list", list);
+        } else {
+            List<CertificationDto> list = certificationService.getByCaregiver(userEntity);
+            model.addAttribute("list", list);
+        }
     }
 
     //글 작성 폼
@@ -54,7 +60,6 @@ public class CertificationController {
     public void addForm() {
     }
 
-    //글 작성
     // 글 작성
     @PostMapping("/add")
     public String add(MultipartFile workContractFile,
@@ -109,6 +114,9 @@ public class CertificationController {
         model.addAttribute("currentUser", udto);
         model.addAttribute("cdto", cdto);
 
+
+        System.out.println("@@@@@@@Current user roles: " + udto.getRole());
+
         return "certification/edit";
     }
 
@@ -120,11 +128,10 @@ public class CertificationController {
                        MultipartFile healthCheckupFile,
                        MultipartFile criminalHistoryFile,
                        MultipartFile privacyConsentFile) {
-        UserDto uDto = userService.getMember(principal.getName());
+//        UserDto uDto = userService.getMember(principal.getName());
         CertificationDto origin = certificationService.getCertification(cdto.getCertificationId());
 
-        UserEntity userEntity = uDto.toEntity();
-        cdto.setCaregiver(userEntity);
+        cdto.setCaregiver(origin.getCaregiver());
 
         try {
             if (workContractFile != null && !workContractFile.isEmpty()) {

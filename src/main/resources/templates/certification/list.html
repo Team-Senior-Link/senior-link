@@ -35,8 +35,9 @@
                             <td><a th:href="@{/certification/edit(certificationId=${l.certificationId})}" th:text="${l.caregiver.name}"></a></td>
                             <td th:text="${#temporals.format(l.createdAt, 'yyyy-MM-dd')}"></td>
                             <td>
-                                <span th:if="${l.caregiver.status == true}">승인</span>
-                                <span th:if="${l.caregiver.status == false}">대기 중</span>
+                                <span th:if="${l.caregiver.status == 0}">대기중</span>
+                                <span th:if="${l.caregiver.status == 1}">인증</span>
+                                <span th:if="${l.caregiver.status == 2}">불인증</span>
                             </td>
                         </tr>
                     <tbody>
@@ -47,6 +48,6 @@
 </main>
 <div th:replace="~{footer :: body}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/scripts.js"></script>
+<!--<script src="js/scripts.js"></script>-->
 </body>
 </html>

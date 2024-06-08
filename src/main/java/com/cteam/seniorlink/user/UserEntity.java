@@ -57,7 +57,7 @@ public class UserEntity implements UserDetails {
     private Integer grade;
 
     @Column
-    private boolean status;
+    private int status; // 자격 상태 (0: 대기중, 1: 인증, 2: 불인증)
 
     @Column(length = 500)
     private String profileImgPath;

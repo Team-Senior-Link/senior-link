@@ -32,7 +32,7 @@ public class UserDto {
 
     private Integer grade;
 
-    private boolean status;
+    private int status;
 
     private String profileImgPath;
 
@@ -71,7 +71,7 @@ public class UserDto {
                 .addressDetail(u.getAddressDetail())
                 .role(u.getRole())
                 .grade(u.getGrade())
-                .status(u.isStatus())
+                .status(u.getStatus())
                 .profileImgPath(u.getProfileImgPath())
                 .createdAt(u.getCreatedAt())
                 .updatedAt(u.getUpdatedAt())
