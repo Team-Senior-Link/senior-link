@@ -1,0 +1,159 @@
+#container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.topWrap {
+    background-color: #3b5998;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+.topWrap h2 {
+    margin: 0;
+    font-size: 24px;
+}
+.partWrap {
+    background-color: #f1f1f1;
+    padding: 10px 0;
+}
+.partWrap ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+.partWrap li {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+}
+.partWrap li.active span {
+    font-weight: bold;
+    color: #3b5998;
+}
+.checklistWrap {
+    padding: 20px;
+}
+.title_wrap h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #333;
+}
+.title_wrap p {
+    margin: 0 0 20px;
+    color: #666;
+}
+.list_wrap p {
+    color: #666;
+    margin: 0 0 20px;
+}
+.list_wrap ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.list_wrap li {
+    margin-bottom: 20px;
+}
+.list_wrap p .num {
+    font-weight: bold;
+    margin-right: 5px;
+}
+.custm {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+}
+.custm input {
+    margin-right: 10px;
+}
+.btnWrap {
+    text-align: center;
+    padding: 20px 0;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #3b5998;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+}
+.btn.gray {
+    background-color: #999;
+}
+.btn.pink {
+    background-color: #e91e63;
+}
+.hidden {
+    display: none;
+}
+
+.result_box {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result_box dl {
+    margin: 0;
+    padding: 0;
+}
+
+.result_box dt {
+    font-weight: bold;
+}
+
+.result_box dd {
+    margin: 0 0 10px 0;
+    padding: 0 0 0 10px;
+}
+
+.result_box .inner {
+    padding: 10px 0;
+}
+
+.result_box .txt01, .result_box .txt02 {
+    margin-bottom: 10px;
+}
+
+.result_box .txt01 {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.result_box .txt02 {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.result_box ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.result_box ul li {
+    margin-bottom: 10px;
+}
+
+.result_box ul li dl dt {
+    margin-bottom: 5px;
+}
+
+.result_box ul li dl dd {
+    margin-left: 20px;
+}

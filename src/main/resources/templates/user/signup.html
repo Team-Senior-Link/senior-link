@@ -25,24 +25,28 @@
             <input type="text" th:field="*{phone}" class="form-control" placeholder="휴대폰 번호">
             <input type="text" th:field="*{address}" class="form-control" placeholder="주소">
             <input type="text" th:field="*{addressDetail}" class="form-control" placeholder="상세주소">
-            <div class="form-group">
-                <select id="role" name="role" th:field="*{role}" class="form-control" onchange="toggleGradeSection()">
-                    <option value="">회원선택</option>
-                    <option value="CAREGIVER">요양보호사</option>
-                    <option value="CARERECEIVER">시니어</option>
-                </select>
+            <div class="inline-group">
+                <div class="form-group mb-2">
+                    <select id="role" name="role" th:field="*{role}" class="form-control" onchange="toggleGradeSection()">
+                        <option value="">회원선택</option>
+                        <option value="CAREGIVER">요양보호사</option>
+                        <option value="CARERECEIVER">시니어</option>
+                    </select>
+                </div>
+                <div id="grade-section" class="form-group mb-2" style="display: none;">
+                    <select id="grade" th:field="*{grade}" class="form-control">
+                        <option value="">등급 선택</option>
+                        <option value="1">1단계</option>
+                        <option value="2">2단계</option>
+                        <option value="3">3단계</option>
+                        <option value="4">4단계</option>
+                        <option value="5">5단계</option>
+                    </select>
+                </div>
             </div>
-            <div id="grade-section" class="form-group" style="display: none;">
-                <label for="grade" class="form-label">시니어 등급</label>
-                <select id="grade"  th:field="*{grade}" class="form-control">
-                    <option value="">등급 선택</option>
-                    <option value="1">1단계</option>
-                    <option value="2">2단계</option>
-                    <option value="3">3단계</option>
-                    <option value="4">4단계</option>
-                    <option value="5">5단계</option>
-                </select>
-            </div>
+
+
+
             <input type="hidden" id="personality" class="form-control">
             <button type="submit" class="button button--login alt">회원가입</button>
         </form>

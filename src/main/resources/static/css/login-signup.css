@@ -149,3 +149,12 @@ form input {
 form input:focus {
     outline: 0;
 }
+
+.inline-group {
+ display: flex;
+ align-items: center;
+}
+
+.inline-group .form-group {
+    margin-right: 10px;
+}

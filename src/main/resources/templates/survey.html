@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>certificationAdd Page</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/survey.css">
+    <script th:src="@{/js/survey.js}"></script>
+</head>
+<body class="d-flex flex-column">
+<main class="flex-shrink-0">
+    <div th:replace="~{nav :: body}"></div>
+    <div id="container">
+        <div class="topWrap">
+            <div>
+                <h2>장기요양등급 예측</h2>
+            </div>
+        </div>
+        <div class="partWrap">
+            <div >
+                <ol id="tabMenu">
+                    <li class="active"><span >신체 기능</span></li>
+                    <li><span >인지 기능</span></li>
+                    <li><span >행동 변화</span></li>
+                    <li><span >간호처치</span></li>
+                    <li><span >재활</span></li>
+                </ol>
+            </div>
+        </div>
+        <form id="surveyForm"  method="post">
+            <div id="tabContent">
+                <div class="checklistWrap">
+                    <div >
+                        <div class="title_wrap">
+                            <h3 >신체(기본적 일상생활 기능)영역</h3>
+                            <p>각 문항에서 세 가지 항목 중 자신에게 가까운 응답을 한 가지씩 골라주세요.</p>
+                        </div>
+                        <div class="list_wrap">
+                            <p>최근 한 달간의 상황을 종합하여 일상생활에서 다음과 같은 동작을 할 때 다른 사람의 도움을 받는 정도를 평가하여 문항에 답해주세요. (총 12문항)</p>
+                            <ol>
+                                <li>
+                                    <p><span class="num">01.</span>옷 벗고 입기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A1" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A1" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A1" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">02.</span>세수하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A2" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A2" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A2" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">03.</span>양치질하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A3" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A3" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A3" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">04.</span>목욕하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A4" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A4" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A4" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">05.</span>식사하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A5" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A5" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A5" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">06.</span>체위 변경하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A6" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A6" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A6" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">07.</span>일어나 앉기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A7" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A7" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A7" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">08.</span>옮겨 앉기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A8" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A8" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A8" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">09.</span>방 밖으로 나오기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A9" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A9" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A9" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">10.</span>화장실 사용하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A10" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A10" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A10" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">11.</span>대변 조절하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A11" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A11" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A11" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">12.</span>소변 조절하기가 가능하십니까?</p>
+                                    <div>
+                                        <label class="custm"><input name="A12" type="radio" value="1"><span>혼자 가능</span></label>
+                                        <label class="custm"><input name="A12" type="radio" value="2"><span>부분 도움이 필요</span></label>
+                                        <label class="custm"><input name="A12" type="radio" value="3"><span>완전 도움이 필요</span></label>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="checklistWrap hidden">
+                    <div >
+                        <div class="title_wrap">
+                            <h3 >인지 기능 영역</h3>
+                            <p>초기 치매, 알츠하이머의 진행 여부와도 관련이 있으며 치매로 인한 상황 판단 능력을 측정합니다.</p>
+                        </div>
+                        <div class="list_wrap">
+                            <p>최근 한 달간의 상황을 종합하여 발생한 신청인의 증상 유무를 문항에 답해주세요.(총 7문항)<br/>아래 해당하는 증상이 없으면 “해당하는 증상이 없다.”로 선택해주세요.</p>
+                            <ol >
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B1" type="radio" value="0"><span>해당하는 증상이 없다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B2" type="radio" value="1"><span>방금 전에 들었던 이야기나 일을 잊는다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B3" type="radio" value="1"><span>오늘이 몇 월 며칠인지 모른다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B4" type="radio" value="1"><span>자신이 있는 장소를 알지 못한다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B5" type="radio" value="1"><span>자신의 나이와 생일을 모른다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B6" type="radio" value="1"><span>지시를 이해하지 못한다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B7" type="radio" value="1"><span>주어진 상황에 대한 판단력이 떨어져 있다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="B8" type="radio" value="1"><span>의사소통이나 전달에 장애가 있다.</span></label>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="checklistWrap hidden">
+                    <div >
+                        <div class="title_wrap">
+                            <h3 >행동 변화 영역</h3>
+                            <p>각 문항에서 신청인이 보였던 증상들을 선택해주세요.</p>
+                        </div>
+                        <div class="list_wrap">
+                            <p>최근 한 달간의 상황을 종합하여 발생한 신청인의 증상 유무를 문항에 답해주세요.(총 14문항)
+                                <br/>아래 해당하는 증상이 없으면 “해당하는 증상이 없다.”로 선택해주세요.</p>
+                            <ol >
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C1" type="radio" value="0"><span>해당하는 증상이 없다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C2" type="radio" value="1"><span>사람들이 무엇을 훔쳤다고 믿거나 자기를 해하려 한다고 잘못 믿고 있다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C3" type="radio" value="1"><span>헛것을 보거나 환청을 듣는다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C4" type="radio" value="1"><span>슬퍼 보이거나 기분이 처져 있으며 때로 울기도 한다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C5" type="radio" value="1"><span>밤에 자다가 일어나 주위 사람을 깨우거나 아침에 너무 일찍 일어난다.<br/>    또는 낮에는 지나치게 잠을 자고 밤에는 잠을 이루지 못한다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C6" type="radio" value="1"><span>주위사람이 도와주려 할 때 도와주는 것에 저항한다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C7" type="radio" value="1"><span>한군데 가만히 있지 못하고 서성거리거나 왔다 갔다 하며 안절부절 못한다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C8" type="radio" value="1"><span>길을 잃거나 헤맨 적이 있다. 외출하면 집이나 병원, 시설로 혼자 들어올 수 없다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C9" type="radio" value="1"><span>화를 내며 폭언이나 폭행을 하는 등 위협적인 행동을 보인다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C10" type="radio" value="1"><span>혼자서 밖으로 나가려고 해서 눈을 뗄 수가 없다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C11" type="radio" value="1"><span>물건을 망가뜨리거나 부순다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C12" type="radio" value="1"><span>의미 없거나 부적절한 행동을 자주 보인다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C13" type="radio" value="1"><span>돈이나 물건을 장롱같이 찾기 어려운 곳에 감춘다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C14" type="radio" value="1"><span>옷을 부적절하게 입는다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="C15" type="radio" value="1"><span>대소변을 벽이나 옷에 바르는 등의 행위를 한다.</span></label>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="checklistWrap hidden">
+                    <div >
+                        <div class="title_wrap">
+                            <h3 >간호처지 영역</h3>
+                            <p>증상이 심각하고 지속적인 관리가 필요한지 신청인의 상황에 맞게 요양 필요 여부와 필요한 간호처치를 판단합니다.</p>
+                        </div>
+                        <div class="list_wrap">
+                            <p>최근 2주간의 상황을 종합하여 발생한 증상 유무를 문항에 답해주세요. (총 9문항)
+                                <br/>아래 해당하는 증상이 없으면 “해당하는 증상이 없다.”로 선택해주세요.</p>
+                            <ol >
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D1" type="radio" value="0"><span>해당하는 증상이 없다.</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D2" type="radio" value="1"><span>기관지 절개관 간호(기관지를 절개하여 인공기도를 확보하는 간호)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D3" type="radio" value="1"><span>흡인(인위적으로 분비물을 제거하여 기도를 유지하는 처치)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D4" type="radio" value="1"><span>산소요법(저산소증이나 저산소혈증을 치료, 감소 시키기 위해 산소공급장치를 통해 추가적인 산소를 공급하는 의료 처치)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D5" type="radio" value="1"><span>욕창 간호(장기적인 고정체위로 인해 압박 부위의 피부와 하부조직이 손상되어 지속적인 드레싱과 체위변경이 필요한 간호)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D6" type="radio" value="1"><span>경관 영양(구강으로 음식섭취가 어려워 관을 통해 위, 십이지장 등에 직접 영양을 공급해야함)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D7" type="radio" value="1"><span>암성통증 간호(암의 진행을 억제하지 못하여 극심한 통증이 발생함)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D8" type="radio" value="1"><span>도뇨 관리(자율적으로 배뇨 관리가 불가능하여 인위적으로 방광을 비우거나 관리하는 처치)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D9" type="radio" value="1"><span>장루(창자샛길) 간호(인공항문을 통해 체외로 대변을 배설시키는 경우, 부착장치의 지속적인 관리)</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <label class="custm"><input name="D10" type="radio" value="1"><span>투선 간호(장기적인 신부전증으로 인해 혈액 투석이 필요)</span></label>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="checklistWrap hidden">
+                    <div >
+                        <div class="title_wrap">
+                            <h3 >재활 영역</h3>
+                            <p>각 관절의 움직임과, 전체적인 팔, 다리의 운동 능력을 확인하는 영역 입니다.</p>
+                        </div>
+                        <div class="list_wrap">
+                            <p>반드시 각 항목을 신청인이 직접 수행하도록 한 후 운동장애 정도에 대해 문항에 답해주세요. (총 10문항)</p>
+                            <ol >
+                                <li>
+                                    <p><span class="num">01.</span>오른쪽 상지(손, 팔, 어깨)가 의지대로 움직이시나요? (우측 상지)</p>
+                                    <div>
+                                        <label class="custm"><input name="E1" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E1" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E1" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">02.</span>오른쪽 하지(발, 다리)가 의지대로 움직이시나요? (우측 하지)</p>
+                                    <div>
+                                        <label class="custm"><input name="E2" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E2" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E2" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">03.</span>왼쪽 상지(손, 팔, 어깨) 가 의지대로 움직이시나요? (좌측 상지)</p>
+                                    <div>
+                                        <label class="custm"><input name="E3" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E3" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E3" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">04.</span>왼쪽 하지 (발, 다리) 가 의지대로 움직이시나요? (좌측 하지)</p>
+                                    <div>
+                                        <label class="custm"><input name="E4" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E4" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E4" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">05.</span>어깨관절이 자유롭게 움직이시나요?</p>
+                                    <div>
+                                        <label class="custm"><input name="E5" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E5" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E5" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">06.</span>팔꿈치관절이 자유롭게 움직이시나요?</p>
+                                    <div>
+                                        <label class="custm"><input name="E6" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E6" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E6" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">07.</span>손목 및 손관절이 자유롭게 움직이시나요?</p>
+                                    <div>
+                                        <label class="custm"><input name="E7" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E7" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E7" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">08.</span>고관절 (엉덩이관절) 이 자유롭게 움직이시나요?</p>
+                                    <div>
+                                        <label class="custm"><input name="E8" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E8" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E8" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">09.</span>무릎관절이 자유롭게 움직이시나요?</p>
+                                    <div>
+                                        <label class="custm"><input name="E9" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E9" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E9" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p><span class="num">10.</span>발목관절이 자유롭게 움직이시나요?</p>
+                                    <div>
+                                        <label class="custm"><input name="E10" type="radio" value="1"><span>운동장애 없음</span></label>
+                                        <label class="custm"><input name="E10" type="radio" value="2"><span>불완전 운동장애</span></label>
+                                        <label class="custm"><input name="E10" type="radio" value="3"><span>완전 운동장애</span></label>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result_box hidden">
+                <dl>
+                    <dt>점수</dt>
+                    <dd id="rs_score"></dd>
+                    <dt>등급</dt>
+                    <dd id="rs_level"></dd>
+                </dl>
+                <div class="inner hidden" id="level1">
+                    <p class="txt01">시설급여, 재가급여, <i class="mbr"></i>치매가족휴가제(종일 방문요양), <i class="mbr"></i>특별현금급여(가족요양비),<br>기타 재가급여(복지용구)를 <i class="mbr"></i>이용할 수 있습니다.</p>
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>재가급여</dt>
+                                <dd>장기요양요원의 방문요양, 주·야간보호, 방문목욕, 방문간호, 단기보호(9일 이내), 복지용구를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>시설급여</dt>
+                                <dd>요양원(입소정원 10명 이상), 노인요양공동 생활가정(입소정원 5~9명) 입소를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>특별현금급여<i class="pbr"></i>(가족요양비)</dt>
+                                <dd>장기요양급여 수급자가 가족 등으로부터 방문요양에 상당하는 장기요양급여 서비스를 받은 경우, 당해 수급자에게 월 15만 원의 가족요양비를 지원합니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt> 치매가족휴가제</dt>
+                                <dd>치매가 있는 수급자를 돌보는 가족이 일시적으로 휴일이 필요한 경우, 월 한도액과 관계없이 1년에 8일 이내로 단기보호 또는 종일 방문요양을 이용할 수 있습니다. <br>(단, 종일 방문요양은 1~2등급 치매 수급자만 이용 가능합니다. *1회당 12시간)</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <p class="txt02">급여 종류 / 내용 변경 신청에 대한 문의는 <i class="mbr"></i>국민건강보험공단에 가능합니다. (1577-1000) <br>신청 시 사실확인서, 치매진단서 등 신청 사유에 <i class="mbr"></i>해당하는 입증서류를 제출해야 합니다.</p>
+                </div>
+
+                <div class="inner hidden" id="level2">
+                    <p class="txt01">시설급여, 재가급여, <i class="mbr"></i>치매가족휴가제(종일 방문요양), <i class="mbr"></i>특별현금급여(가족요양비),<br>기타 재가급여(복지용구)를 <i class="mbr"></i>이용할 수 있습니다.</p>
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>재가급여</dt>
+                                <dd>장기요양요원의 방문요양, 주·야간보호, 방문목욕, 방문간호, 단기보호(9일 이내), 복지용구를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>시설급여</dt>
+                                <dd>요양원(입소정원 10명 이상), 노인요양공동 생활가정(입소정원 5~9명) 입소를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>특별현금급여<i class="pbr"></i>(가족요양비)</dt>
+                                <dd>장기요양급여 수급자가 가족 등으로부터 방문요양에 상당하는 장기요양급여 서비스를 받은 경우, 당해 수급자에게 월 15만 원의 가족요양비를 지원합니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt> 치매가족휴가제</dt>
+                                <dd>치매가 있는 수급자를 돌보는 가족이 일시적으로 휴일이 필요한 경우, 월 한도액과 관계없이 1년에 8일 이내로 단기보호 또는 종일 방문요양을 이용할 수 있습니다. <br>(단, 종일 방문요양은 1~2등급 치매 수급자만 이용 가능합니다. *1회당 12시간)</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <p class="txt02">급여 종류 / 내용 변경 신청에 대한 문의는 <i class="mbr"></i>국민건강보험공단에 가능합니다. (1577-1000) <br>신청 시 사실확인서, 치매진단서 등 신청 사유에 <i class="mbr"></i>해당하는 입증서류를 제출해야 합니다.</p>
+                </div>
+
+                <div class="inner hidden" id="level3">
+                    <p class="txt01">재가급여, <i class="mbr"></i>특별현금급여(가족요양비), <i class="mbr"></i>기타 재가급여(복지용구)를 <i class="mbr"></i>이용할 수 있습니다.</p>
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>재가급여</dt>
+                                <dd>장기요양요원의 방문요양, 주·야간보호, 방문목욕, 방문간호, 단기보호(9일 이내), 복지용구를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>특별현금급여<i class="pbr"></i>(가족요양비)</dt>
+                                <dd>장기요양급여 수급자가 가족 등으로부터 방문요양에 상당하는 장기요양급여 서비스를 받은 경우, 당해 수급자에게 월 15만 원의 가족요양비를 지원합니다.</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <p class="txt02">급여 종류 / 내용 변경 신청에 대한 문의는 <i class="mbr"></i>국민건강보험공단에 가능합니다. (1577-1000) <br>신청 시 사실확인서, 치매진단서 등 신청 사유에 <i class="mbr"></i>해당하는 입증서류를 제출해야 합니다.</p>
+                </div>
+                <div class="inner hidden" id="level4">
+                    <p class="txt01">재가급여, <i class="mbr"></i>특별현금급여(가족요양비), <i class="mbr"></i>기타 재가급여(복지용구)를 <i class="mbr"></i>이용할 수 있습니다.</p>
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>재가급여</dt>
+                                <dd>장기요양요원의 방문요양, 주·야간보호, 방문목욕, 방문간호, 단기보호(9일 이내), 복지용구를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>특별현금급여<i class="pbr"></i>(가족요양비)</dt>
+                                <dd>장기요양급여 수급자가 가족 등으로부터 방문요양에 상당하는 장기요양급여 서비스를 받은 경우, 당해 수급자에게 월 15만 원의 가족요양비를 지원합니다.</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <p class="txt02">급여 종류 / 내용 변경 신청에 대한 문의는 <i class="mbr"></i>국민건강보험공단에 가능합니다. (1577-1000) <br>신청 시 사실확인서, 치매진단서 등 신청 사유에 <i class="mbr"></i>해당하는 입증서류를 제출해야 합니다.</p>
+                </div>
+                <div class="inner hidden" id="level5">
+                    <p class="txt01">재가급여, <i class="mbr"></i>특별현금급여(가족요양비), <i class="mbr"></i>기타 재가급여(복지용구)를 <i class="mbr"></i>이용할 수 있습니다.</p>
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>재가급여</dt>
+                                <dd>장기요양요원의 방문요양, 주·야간보호, 방문목욕, 방문간호, 단기보호(9일 이내), 복지용구를 지원받을 수 있습니다.</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>특별현금급여<i class="pbr"></i>(가족요양비)</dt>
+                                <dd>장기요양급여 수급자가 가족 등으로부터 방문요양에 상당하는 장기요양급여 서비스를 받은 경우, 당해 수급자에게 월 15만 원의 가족요양비를 지원합니다.</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <p class="txt02">급여 종류 / 내용 변경 신청에 대한 문의는 <i class="mbr"></i>국민건강보험공단에 가능합니다. (1577-1000) <br>신청 시 사실확인서, 치매진단서 등 신청 사유에 <i class="mbr"></i>해당하는 입증서류를 제출해야 합니다.</p>
+                </div>
+
+                <div class="inner hidden" id="level6">
+                    <p class="txt01">주·야간 보호급여, <i class="mbr"></i>기타 재가급여(복지용구)를 <i class="mbr"></i>이용할 수 있습니다.</p>
+                    <p class="txt02">급여 종류 / 내용 변경 신청에 대한 문의는 <i class="mbr"></i>국민건강보험공단에 가능합니다. (1577-1000) <br>신청 시 사실확인서, 치매진단서 등 신청 사유에 <i class="mbr"></i>해당하는 입증서류를 제출해야 합니다.</p>
+                </div>
+            </div>
+            <div class="btnWrap multi mt60">
+                <button type="button" class="btn gray" onclick="prevTab();">이전</button>
+                <button type="button" class="btn pink" onclick="nextTab();">다음</button>
+                <button type="button" class="btn pink hidden" id="submitBtn" onclick="submitForm();">제출</button>
+            </div>
+        </form>
+    </div>
+</main>
+<div th:replace="~{footer :: body}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/survey.js"></script>
+</body>
+</html>
