@@ -102,5 +102,9 @@ public class UserController {
         return "redirect:/certification/list";
     }
 
-
+    //자가 등급 확인
+    @GetMapping("/survey")
+    public String survey() {
+        return "survey";
+    }
 }
