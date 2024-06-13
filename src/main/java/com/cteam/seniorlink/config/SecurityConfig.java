@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -27,7 +28,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/service/add").hasAuthority("ROLE_CAREGIVER")
-                        .requestMatchers("/certification/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CAREGIVER")
+                        .requestMatchers("/certification/add").hasAuthority("ROLE_CAREGIVER")
+                        .requestMatchers("/certification/list").hasAnyAuthority("ROLE_ADMIN", "ROLE_CAREGIVER")
+                        .requestMatchers("/certification/edit").hasAnyAuthority("ROLE_ADMIN", "ROLE_CAREGIVER")
                         .requestMatchers("/user/approve/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/user/disapprove/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/user/mypage/**").authenticated()
@@ -44,19 +47,29 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
-//                .csrf().disable(); // CSRF 보호 비활성화
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .ignoringRequestMatchers(new AntPathRequestMatcher("/chat/**"))
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(accessDeniedHandler())
                 );
 
         return http.build();
     }
 
     @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            response.sendRedirect("/access-denied");
+        };
+    }
+
+    @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);

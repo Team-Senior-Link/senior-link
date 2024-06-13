@@ -10886,5 +10886,12 @@ hr {
 .textarea {
   white-space: pre-wrap;
 }
+.navbar-brand {
+  font-size: 2rem; /* 시니어링크 글자 크기 조정 */
+}
 
+.navbar {
+  padding-top: 20px; /* 네비게이션 바 상단 여백 추가 */
+  padding-bottom: 20px; /* 네비게이션 바 하단 여백 추가 */
+}
 

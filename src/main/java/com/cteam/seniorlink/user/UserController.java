@@ -89,6 +89,7 @@ public class UserController {
 
     // 자격 인증 상태 (0: 대기중, 1: 인증, 2: 불인증)
     // 자격 인증
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/approve")
     public String approveStatus(long userId) {
         userService.updateCertificateStatus(userId, 1);
@@ -96,6 +97,7 @@ public class UserController {
     }
 
     //자격 불인증
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/disapprove")
     public String disapproveStatus(long userId) {
         userService.updateCertificateStatus(userId, 2);

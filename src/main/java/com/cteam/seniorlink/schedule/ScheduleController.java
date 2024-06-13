@@ -77,36 +77,53 @@ public class ScheduleController {
         LocalDateTime endDate = LocalDateTime.parse(endDateString, dateTimeFormatter);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity carereceiver = (UserEntity) authentication.getPrincipal();
+        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
 
         ServiceDto sdto = serviceService.getService(serviceId);
         UserEntity caregiver = sdto.getCaregiver();
+        System.out.println(caregiver.getName());
 
-        int grade = carereceiver.getGrade();
+        Integer grade = currentUser.getGrade();
         int maxReservationTime = 0;
-        if (grade == 1 || grade == 2) {
-            maxReservationTime = 4;
-        } else if (grade == 3 || grade == 4 || grade == 5) {
-            maxReservationTime = 3;
-        }
-
-        LocalDate startDateLocalDate = startDate.toLocalDate();
-        List<ScheduleEntity> eventsOnStartDate = scheduleRepository.findByCarereceiverAndStartDateBetween(
-                carereceiver, startDateLocalDate.atStartOfDay(), startDateLocalDate.atTime(LocalTime.MAX));
 
         ModelMap map = new ModelMap();
         boolean isReservation = true;
 
-        if (eventsOnStartDate.size() >= maxReservationTime) {
-            String message = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
-            map.put("message", message);
-            isReservation = false;
+        // 현재 사용자가 서비스 제공자인지 확인
+        boolean isCaregiver = currentUser.getUserId() == caregiver.getUserId();
+
+        // 요양등급이 null인 경우 예약 불가 메시지 설정, 단, 서비스 제공자 예외
+        if (grade == null) {
+            if (!isCaregiver) {
+                String message = "예약을 진행하려면 먼저 마이페이지에서 요양 등급을 지정해주세요.";
+                map.put("message", message);
+                isReservation = false;
+            } else {
+                maxReservationTime = Integer.MAX_VALUE;
+            }
+        } else {
+            if (grade == 1 || grade == 2) {
+                maxReservationTime = 4;
+            } else if (grade == 3 || grade == 4 || grade == 5) {
+                maxReservationTime = 3;
+            }
+
+            LocalDate startDateLocalDate = startDate.toLocalDate();
+            List<ScheduleEntity> eventsOnStartDate = scheduleRepository.findByCarereceiverAndStartDateBetween(
+                    currentUser, startDateLocalDate.atStartOfDay(), startDateLocalDate.atTime(LocalTime.MAX));
+
+            if (eventsOnStartDate.size() >= maxReservationTime) {
+                String message = "하루 이용 가능 서비스 신청 시간을 초과했습니다.";
+                map.put("message", message);
+                isReservation = false;
+            }
         }
+
         map.put("isReservation", isReservation);
 
         if (isReservation) {
             ScheduleDto dto = ScheduleDto.builder()
-                    .carereceiver(carereceiver)
+                    .carereceiver(currentUser)
                     .caregiver(caregiver)
                     .serviceId(serviceId)
                     .startDate(startDate)
@@ -119,6 +136,7 @@ public class ScheduleController {
 
         return map;
     }
+
 
     // 예약 취소
     @GetMapping("/del/{scheduleId}")

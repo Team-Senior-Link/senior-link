@@ -30,7 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/certification")
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class CertificationController {
 
     private final UserService userService;
@@ -114,21 +114,17 @@ public class CertificationController {
         model.addAttribute("currentUser", udto);
         model.addAttribute("cdto", cdto);
 
-
-        System.out.println("@@@@@@@Current user roles: " + udto.getRole());
-
         return "certification/edit";
     }
 
     //수정 완료
     @PostMapping(value = "/edit", consumes = "multipart/form-data")
-    public String edit(CertificationDto cdto, Principal principal,
+    public String edit(CertificationDto cdto,
                        MultipartFile workContractFile,
                        MultipartFile certificateFile,
                        MultipartFile healthCheckupFile,
                        MultipartFile criminalHistoryFile,
                        MultipartFile privacyConsentFile) {
-//        UserDto uDto = userService.getMember(principal.getName());
         CertificationDto origin = certificationService.getCertification(cdto.getCertificationId());
 
         cdto.setCaregiver(origin.getCaregiver());
