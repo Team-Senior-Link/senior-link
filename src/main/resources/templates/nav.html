@@ -7,41 +7,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
 <body>
-<nav class="navbar navbar-expand-lg">
-    <div class="container px-5">
-        <a class="navbar-brand">시니어링크</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">시니어링크</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" th:href="@{/service/list}">방문 요양 서비스 신청</a></li>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/service/list}"> 방문 요양 서비스 신청</a>
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">요양보호사 지원</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       요양보호사 지원
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownBlog">
                         <li><a class="dropdown-item" th:href="@{/service/add}">지원서 작성</a></li>
                         <li><a class="dropdown-item" th:href="@{/certification/add}">자격 인증 신청</a></li>
                         <li><a class="dropdown-item" th:href="@{/certification/list}">자격 인증 확인</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/videoBoard/list}">공지사항</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{user/survey}">자가등급확인</a></li>
                 <li class="nav-item">
-                    <div sec:authorize="isAnonymous()" class="nav-item">
-                        <a class="nav-link" th:href="@{/user/login}">로그인</a>
+                    <a class="nav-link" th:href="@{/videoBoard/list}">공지사항</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/survey}">자가등급확인</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <div sec:authorize="isAnonymous()">
+                        <a class="nav-link" th:href="@{/user/login}"><i class="bi bi-door-open"></i> 로그인</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="isAnonymous()" class="nav-item">
-                        <a class="nav-link" th:href="@{/user/signup}">회원가입</a>
+                    <div sec:authorize="isAnonymous()">
+                        <a class="nav-link" th:href="@{/user/signup}"><i class="bi bi-person-plus"></i> 회원가입</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" th:href="@{/user/logout}">로그아웃</a>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/user/logout}"><i class="bi bi-door-closed"></i> 로그아웃</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <div sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" th:href="@{/user/mypage}">마이페이지</a>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/user/mypage}"><i class="bi bi-person-circle"></i> 마이페이지</a>
                     </div>
                 </li>
             </ul>

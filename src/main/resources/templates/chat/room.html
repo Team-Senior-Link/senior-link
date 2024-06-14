@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Chat Room</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <link href="/css/styles.css" rel="stylesheet">
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 100% viewport height */
+        }
+        #content {
+            flex: 1; /* Expand to fill available space */
+        }
+        #footer {
+            flex-shrink: 0; /* Do not shrink */
+        }
         #message-list {
             height: 400px;
             overflow-y: scroll;
@@ -15,10 +30,11 @@
     </style>
 </head>
 <body>
-<div class="container mt-5">
+<div th:replace="~{nav :: body}"></div>
+<div id="content" class="container mt-5">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <div class="card">
+            <div class="custom-card"> <!-- 변경된 클래스명 -->
                 <div class="card-header text-center"></div>
                 <div class="card-body" id="message-list">
                     <ul class="list-unstyled">
@@ -124,5 +140,6 @@
         scrollToBottom();
     });
 </script>
+<div id="footer" th:replace="~{footer :: body}"></div>
 </body>
 </html>
